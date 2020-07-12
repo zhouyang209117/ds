@@ -3,5 +3,5 @@ project(ds C)
 
 set(CMAKE_C_STANDARD 99)
 include_directories(include)
-add_subdirectory (src)
-add_subdirectory (app)
+add_subdirectory (src/list)
+add_subdirectory (app/list)
