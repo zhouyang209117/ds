@@ -1,6 +1,9 @@
 #include <stdio.h>
-#include "list/calc.h"
+#include "list/list.h"
 int main() {
-    printf("%d\n", add(1, 1));
-    return 0;
+    SqList* list = CreateSqList(10);
+    list->Add(list, 2);
+    printf("%d\n", list->length);
+    printf("%d\n", list->total);
+    printf("%d\n", (list->ele)[0]);
 }
