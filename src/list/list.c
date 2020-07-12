@@ -1,21 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "list/list.h"
 
-SqList* CreateSqList(int total) {
+SqList* CreateSqList(int totalLen, int eleSize) {
     SqList* sqList = (SqList*)malloc(sizeof(SqList));
-    sqList->total = total;
-    sqList->ele = (int*)malloc(sizeof(int) * total);
+    sqList->total = totalLen;
+    sqList->ele = (char*)malloc(totalLen * eleSize);
     sqList->Add = Add;
     sqList->length = 0;
     return sqList;
 }
 
-int Add(SqList* self, int a) {
+int Add(SqList* self, void* data, int size) {
     if (self->length == self->total) {
         return 1;
     }
-    *(self->ele + self->length) = a;
+    memcpy(self->ele + self->length, data, size);
     self->length += 1;
     return 0;
 }

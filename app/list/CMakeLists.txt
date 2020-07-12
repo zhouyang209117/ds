@@ -1,2 +1,2 @@
-add_executable(app.out main.c)
-target_link_libraries(app.out PUBLIC calc)
+add_executable(sqlist.out main.c)
+target_link_libraries(sqlist.out PUBLIC calc)

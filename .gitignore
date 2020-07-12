@@ -6,3 +6,4 @@ CMakeCache.txt
 Makefile
 *.out
 *.a
+*.cbp
