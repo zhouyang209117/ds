@@ -12,6 +12,7 @@ SqList* CreateSqList(int totalLen, int eleSize) {
     sqList->Add = Add;
     sqList->Get = Get;
     sqList->Set = Set;
+    sqList->Remove = Remove;
     sqList->Traverse = Traverse;
     return sqList;
 }
@@ -39,6 +40,19 @@ int Set(SqList* self, int index, int size, void* data) {
     }
     int offset = index * size;
     memcpy(self->ele + offset, data, size);
+    return 0;
+}
+
+int Remove(SqList* self, int index, int size) {
+    if (index < 0 || index >= self->length) {
+        return 1;
+    }
+    for (int i = index; i < self->length - 1; i++) {
+        int offset1 = i * size;
+        int offset2 = (i + 1) * size;
+        memcpy(self->ele + offset1, self->ele + offset2, size);
+    }
+    self->length -= 1;
     return 0;
 }
 

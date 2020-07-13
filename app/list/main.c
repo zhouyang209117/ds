@@ -37,5 +37,12 @@ int main() {
     list->Set(list, 1, sizeof(Student), &stu3);
     printf("%ls:\n", L"遍历结果");
     list->Traverse(list, sizeof(Student), printStu);
+    printf("%ls:\n", L"删除");
+    int result = list->Remove(list, 2, sizeof(Student));
+    if (result != 0) {
+        printf("delete error\n");
+    }
+    printf("%ls:\n", L"遍历结果");
+    list->Traverse(list, sizeof(Student), printStu);
     return 0;
 }
