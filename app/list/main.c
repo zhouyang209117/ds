@@ -30,5 +30,12 @@ int main() {
     printf("num=%d,name=%ls\n", stuSrc->num, stuSrc->name);
     printf("%ls:\n", L"遍历结果");
     list->Traverse(list, sizeof(Student), printStu);
+    printf("%ls:\n", L"修改");
+    Student stu3;
+    stu3.num = 3;
+    stu3.name = L"张三3";
+    list->Set(list, 1, sizeof(Student), &stu3);
+    printf("%ls:\n", L"遍历结果");
+    list->Traverse(list, sizeof(Student), printStu);
     return 0;
 }

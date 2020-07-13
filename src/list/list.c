@@ -11,6 +11,7 @@ SqList* CreateSqList(int totalLen, int eleSize) {
 
     sqList->Add = Add;
     sqList->Get = Get;
+    sqList->Set = Set;
     sqList->Traverse = Traverse;
     return sqList;
 }
@@ -30,6 +31,15 @@ void* Get(SqList* self, int index, int size) {
         return NULL;
     }
     return self->ele + (self->length - 1) * size;
+}
+
+int Set(SqList* self, int index, int size, void* data) {
+    if (index >= self->length) {
+        return 1;
+    }
+    int offset = index * size;
+    memcpy(self->ele + offset, data, size);
+    return 0;
 }
 
 void Traverse(SqList* self, int size, void(*traverse)(void*)) {
