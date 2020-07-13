@@ -5,10 +5,10 @@ typedef struct SqList_ {
     int length;
     int total;
     int (*Add)(struct SqList_*, void*, int);
-    void* (*Get)(struct SqList_*, int);
+    void* (*Get)(struct SqList_*, int, int);
 }SqList;
 
 SqList* CreateSqList(int, int);
 int Add(SqList*, void*, int);
-void* Get(SqList*, int);
+void* Get(SqList*, int, int);
 #endif

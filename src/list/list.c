@@ -17,14 +17,15 @@ int Add(SqList* self, void* data, int size) {
     if (self->length == self->total) {
         return 1;
     }
-    memcpy(self->ele + self->length, data, size);
+    int offset = self->length * size;
+    memcpy(self->ele + offset, data, size);
     self->length += 1;
     return 0;
 }
 
-void* Get(SqList* self, int index) {
+void* Get(SqList* self, int index, int size) {
     if (index >= self->length) {
         return NULL;
     }
-    return self->ele + (self->length - 1);
+    return self->ele + (self->length - 1) * size;
 }
