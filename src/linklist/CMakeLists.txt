@@ -1,0 +1,1 @@
+add_library(linklist linklist.c)
