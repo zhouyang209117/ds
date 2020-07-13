@@ -22,7 +22,7 @@ int Add(SqList* self, void* data, int size) {
     return 0;
 }
 
-char* Get(SqList* self, int index) {
+void* Get(SqList* self, int index) {
     if (index >= self->length) {
         return NULL;
     }

@@ -16,15 +16,10 @@ int main() {
     stu.num = 2;
     stu.name = L"中";
     list->Add(list, (void*)(&stu), sizeof(Student));
-    printf("%d\n", list->length);
-    printf("%d\n", list->total);
-    printf("%d\n", ((Student*)(list->ele))[0].num);
-    printf("%ls\n", ((Student*)(list->ele))[0].name);
-    char* stuSrc = list->Get(list, 0);
+    void* stuSrc = list->Get(list, 0);
     Student stuDest;
     memcpy(&stuDest, stuSrc, sizeof(Student));
-//    printf("%p\n", stuDest);
+    printf("%d\n", stuDest.num);
     printf("%ls", stuDest.name);
-//    printf("%d,%ls", stuDest.num, stuDest.name);
     return 0;
 }
