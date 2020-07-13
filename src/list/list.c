@@ -7,9 +7,11 @@ SqList* CreateSqList(int totalLen, int eleSize) {
     SqList* sqList = (SqList*)malloc(sizeof(SqList));
     sqList->total = totalLen;
     sqList->ele = (char*)malloc(totalLen * eleSize);
+    sqList->length = 0;
+
     sqList->Add = Add;
     sqList->Get = Get;
-    sqList->length = 0;
+    sqList->Traverse = Traverse;
     return sqList;
 }
 
@@ -28,4 +30,11 @@ void* Get(SqList* self, int index, int size) {
         return NULL;
     }
     return self->ele + (self->length - 1) * size;
+}
+
+void Traverse(SqList* self, int size, void(*traverse)(void*)) {
+    for (int i = 0; i < self->length; i++) {
+        char* current = self->ele + size * i;
+        traverse((void*)current);
+    }
 }

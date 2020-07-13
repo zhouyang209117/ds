@@ -6,9 +6,11 @@ typedef struct SqList_ {
     int total;
     int (*Add)(struct SqList_*, void*, int);
     void* (*Get)(struct SqList_*, int, int);
+    void (*Traverse)(struct SqList_*, int, void(*traverse)(void*));
 }SqList;
 
 SqList* CreateSqList(int, int);
 int Add(SqList*, void*, int);
 void* Get(SqList*, int, int);
+void Traverse(struct SqList_*, int, void(*traverse)(void*));
 #endif

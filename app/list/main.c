@@ -9,6 +9,12 @@ typedef struct Student_ {
     wchar_t* name;
 }Student;
 
+
+void printStu(void* stu) {
+    Student* tmp = (Student*)stu;
+    printf("num=%d,name=%ls\n", tmp->num, tmp->name);
+}
+
 int main() {
     setlocale(LC_ALL, "zh_CN.UTF-8");
     SqList* list = CreateSqList(10, sizeof(Student));
@@ -18,13 +24,13 @@ int main() {
     Student stu2;
     stu2.num = 2;
     stu2.name = L"张三2";
-    printf("%lu\n", sizeof(Student));
     list->Add(list, (void*)(&stu1), sizeof(Student));
     list->Add(list, (void*)(&stu2), sizeof(Student));
-
     void* stuSrc = list->Get(list, 0, sizeof(Student));
     Student stuDest;
     memcpy(&stuDest, stuSrc, sizeof(Student));
     printf("num=%d,name=%ls\n", stuDest.num, stuDest.name);
+    printf("%ls:\n", L"遍历结果");
+    list->Traverse(list, sizeof(Student), printStu);
     return 0;
 }
