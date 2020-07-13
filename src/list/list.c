@@ -8,6 +8,7 @@ SqList* CreateSqList(int totalLen, int eleSize) {
     sqList->total = totalLen;
     sqList->ele = (char*)malloc(totalLen * eleSize);
     sqList->Add = Add;
+    sqList->Get = Get;
     sqList->length = 0;
     return sqList;
 }
@@ -19,4 +20,11 @@ int Add(SqList* self, void* data, int size) {
     memcpy(self->ele + self->length, data, size);
     self->length += 1;
     return 0;
+}
+
+char* Get(SqList* self, int index) {
+    if (index >= self->length) {
+        return NULL;
+    }
+    return self->ele + (self->length - 1);
 }
