@@ -26,10 +26,8 @@ int main() {
     stu2.name = L"张三2";
     list->Add(list, (void*)(&stu1), sizeof(Student));
     list->Add(list, (void*)(&stu2), sizeof(Student));
-    void* stuSrc = list->Get(list, 0, sizeof(Student));
-    Student stuDest;
-    memcpy(&stuDest, stuSrc, sizeof(Student));
-    printf("num=%d,name=%ls\n", stuDest.num, stuDest.name);
+    Student* stuSrc = list->Get(list, 0, sizeof(Student));
+    printf("num=%d,name=%ls\n", stuSrc->num, stuSrc->name);
     printf("%ls:\n", L"遍历结果");
     list->Traverse(list, sizeof(Student), printStu);
     return 0;
