@@ -1,1 +1,1 @@
-add_library(calc list.c)
+add_library(list list.c)
