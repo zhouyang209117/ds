@@ -8,6 +8,7 @@ typedef struct SqList_ {
     void* (*Get)(struct SqList_*, int, int);
     int (*Set)(struct SqList_*, int, int, void*);
     int (*Remove)(struct SqList_*, int, int);
+    int (*Find)(struct SqList_*, void*, int, bool(*)(void*, void*));
     void (*Traverse)(struct SqList_*, int, void(*)(void*));
 }SqList;
 
@@ -16,5 +17,6 @@ int Add(SqList*, void*, int);
 void* Get(SqList*, int, int);
 int Set(struct SqList_*, int, int, void*);
 int Remove(struct SqList_*, int, int);
+int Find(struct SqList_*, void*, int, bool(*)(void*, void*));
 void Traverse(struct SqList_*, int, void(*)(void*));
 #endif

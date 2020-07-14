@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "list/list.h"
 
 SqList* CreateSqList(int totalLen, int eleSize) {
@@ -13,6 +14,7 @@ SqList* CreateSqList(int totalLen, int eleSize) {
     sqList->Get = Get;
     sqList->Set = Set;
     sqList->Remove = Remove;
+    sqList->Find = Find;
     sqList->Traverse = Traverse;
     return sqList;
 }
@@ -54,6 +56,16 @@ int Remove(SqList* self, int index, int size) {
     }
     self->length -= 1;
     return 0;
+}
+
+int Find(SqList* self, void* data, int size, bool(*equal)(void*, void*)) {
+    for (int i = 0; i < self->length; i++) {
+        char* current = self->ele + size * i;
+        if (equal(data, current)) {
+            return i;
+        }
+    }
+    return -1;
 }
 
 void Traverse(SqList* self, int size, void(*traverse)(void*)) {
