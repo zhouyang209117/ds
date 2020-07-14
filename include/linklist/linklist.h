@@ -8,8 +8,11 @@ typedef struct LinkNode {
 typedef struct LinkList_ {
     LinkNode *head;
     size_t length;
-    int (*Add)(struct LinkList_*, void*, int);
+    int (*Add)(struct LinkList_*, int, void*, int);
+    void (*Traverse)(struct LinkList_*, void(*)(void*));
 }LinkList;
 
 LinkList* CreateLinkList();
+int Add(struct LinkList_*, int, void*, int);
+void Traverse(struct LinkList_*, void(*)(void*));
 #endif
