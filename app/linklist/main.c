@@ -24,29 +24,40 @@ bool equal(void* stu1, void* stu2) {
     }
 }
 
+bool gt(void* a1, void* a2) {
+    Student* s1 = (Student*)a1;
+    Student* s2 = (Student*)a2;
+    if (s1->num > s2->num) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+Student* CreateStudent(int num ,wchar_t* name) {
+    Student* s = (Student*)malloc(sizeof(Student));
+    s->num = num;
+    s->name = name;
+    return s;
+}
+
 int main() {
     setlocale(LC_ALL, "zh_CN.UTF-8");
     LinkList* list = CreateLinkList();
-    Student stu1;
-    stu1.name = L"张三1";
-    stu1.num = 1;
-    Student stu2;
-    stu2.name = L"张三2";
-    stu2.num = 2;
-    int result = list->Add(list, 0, &stu1, sizeof(Student));
-    if (result != 0) {
-        printf("add error\n");
-        return 1;
-    }
-    result = list->Add(list, 1, &stu2, sizeof(Student));
-    if (result != 0) {
-        printf("add error\n");
-        return 1;
-    }
+    Student* stu1 = CreateStudent(100, L"张三1");
+    Student* stu2 = CreateStudent(1, L"张三2");
+    Student* stu3 = CreateStudent(90, L"张三3");
+    Student* stu4 = CreateStudent(2, L"张三4");
+    list->Add(list, 0, stu1, sizeof(Student));
+    list->Add(list, 0, stu2, sizeof(Student));
+    list->Add(list, 0, stu3, sizeof(Student));
+    list->Add(list, 0, stu4, sizeof(Student));
     list->Traverse(list, printStu);
-    result = list->Find(list, &stu2, equal);
+    int result = list->Find(list, stu2, equal);
     printf("found index:%d\n", result);
     printf("get result:\n");
     printStu(list->Get(list, 0));
+    list->Sort(list, sizeof(Student), gt);
+    list->Traverse(list, printStu);
     return 0;
 }
