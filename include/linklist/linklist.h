@@ -11,6 +11,7 @@ typedef struct LinkList_ {
     int (*Add)(struct LinkList_*, int, void*, int);
     void* (*Get)(struct LinkList_*, int);
     int (*Find)(struct LinkList_*, void*, bool(*)(void*, void*));
+    LinkNode* (*Next)(struct LinkList_*, LinkNode*);
     void (*Traverse)(struct LinkList_*, void(*)(void*));
     void (*Sort)(struct LinkList_*, int size, bool(*)(void*, void*));
 }LinkList;
@@ -19,6 +20,7 @@ LinkList* CreateLinkList();
 int Add(struct LinkList_*, int, void*, int);
 void* Get(struct LinkList_*, int);
 int Find(struct LinkList_*, void*, bool(*)(void*, void*));
+LinkNode* Next(struct LinkList_*, LinkNode*);
 void Traverse(struct LinkList_*, void(*)(void*));
 void Sort(struct LinkList_*, int size, bool(*)(void*, void*));
 #endif

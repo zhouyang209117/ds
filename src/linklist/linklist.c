@@ -20,6 +20,7 @@ LinkList* CreateLinkList() {
     list->Add = Add;
     list->Get = Get;
     list->Find = Find;
+    list->Next = Next;
     list->Traverse = Traverse;
     list->Sort = Sort;
     return list;
@@ -65,6 +66,16 @@ int Find(LinkList* self, void* data, bool(*equal)(void*, void*)) {
         index++;
     }
     return -1;
+}
+
+LinkNode* Next(LinkList* self, LinkNode* current) {
+    if (self == NULL) {
+        return NULL;
+    }
+    if (current == NULL) {
+        return self->head->next;
+    }
+    return current->next;
 }
 
 void Traverse(LinkList* self, void(*traverse)(void*)) {

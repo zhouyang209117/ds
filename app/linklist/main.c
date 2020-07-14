@@ -59,5 +59,13 @@ int main() {
     printStu(list->Get(list, 0));
     list->Sort(list, sizeof(Student), gt);
     list->Traverse(list, printStu);
+    printf("next:\n");
+    LinkNode* current = NULL;
+    do {
+        current = list->Next(list, current);
+        if (current != NULL) {
+            printStu((Student*)(current->ele));
+        }
+    } while(current != NULL);
     return 0;
 }

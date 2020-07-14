@@ -8,6 +8,9 @@
 
 #define CN_START 19968
 #define CN_END 40869
+
+#define TAG_START '<'
+#define TAG_END '>'
 typedef struct Node_ {
     int num;
     wchar_t Char;
@@ -65,18 +68,60 @@ bool lt(void* a1, void* a2) {
     }
 }
 
-int main() {
-    setlocale(LC_ALL, "zh_CN.UTF-8");
-    LinkList* list = CreateLinkList();
-    FILE * fin;
+void step1() {
+    FILE* fin = fopen ("1.txt","r");
+    FILE* fout1 = fopen ("2.txt","w");
+    if (fin == NULL) {
+        printf("read file error\n");
+        return;
+    }
+    if (fout1 == NULL) {
+        printf("write file error\n");
+        return;
+    }
+    bool needWrite = true;
     wchar_t wc;
-    fin=fopen ("a.txt","r");
-    while((wc=fgetwc(fin))!=WEOF){
+    while ((wc = fgetwc(fin)) != WEOF) {
+        if (wc == btowc(TAG_START)) {
+            needWrite = false;
+            continue;
+        }
+        if (wc == btowc(TAG_END)) {
+            needWrite = true;
+            continue;
+        }
+        if (needWrite) {
+            fputwc(wc, fout1);
+        }
+    }
+    fclose(fin);
+    fclose(fout1);
+}
+
+void step2() {
+    LinkList* list = CreateLinkList();
+    wchar_t wc;
+    FILE* fin = fopen ("2.txt","r");
+    while ((wc = fgetwc(fin)) != WEOF){
         processChar(list, wc);
     }
     fclose(fin);
-    printf("len=%zu\n", list->length);
     list->Sort(list, sizeof(Node), lt);
-    list->Traverse(list, printNode);
+    FILE* fout = fopen ("3.txt","w");
+    LinkNode* current = NULL;
+    do {
+        current = list->Next(list, current);
+        if (current != NULL) {
+            Node* node = (Node*)(current->ele);
+            fwprintf(fout, L"%lc,%d\n", node->Char, node->num);
+        }
+    } while(current != NULL);
+    fclose(fout);
+}
+
+int main() {
+    setlocale(LC_ALL, "zh_CN.UTF-8");
+    step1();
+    step2();
     return 0;
 }
