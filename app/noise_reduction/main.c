@@ -18,7 +18,7 @@ void printNode(void* node) {
     Node* tmp = (Node*)node;
     wchar_t* a = (wchar_t*)malloc(sizeof(wchar_t));
     *a = tmp->Char;
-    printf("name=%ls,num=%d\n", a, tmp->num);
+    printf("%ls,%d\n", a, tmp->num);
 }
 
 bool equal(void* a, void* b) {
@@ -55,6 +55,16 @@ void processChar(LinkList* list, wchar_t w) {
     }
 }
 
+bool lt(void* a1, void* a2) {
+    Node* s1 = (Node*)a1;
+    Node* s2 = (Node*)a2;
+    if (s1->num > s2->num) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
 int main() {
     setlocale(LC_ALL, "zh_CN.UTF-8");
     LinkList* list = CreateLinkList();
@@ -66,6 +76,7 @@ int main() {
     }
     fclose(fin);
     printf("len=%zu\n", list->length);
+    list->Sort(list, sizeof(Node), lt);
     list->Traverse(list, printNode);
     return 0;
 }

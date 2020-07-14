@@ -78,13 +78,9 @@ void Traverse(LinkList* self, void(*traverse)(void*)) {
 void Sort(LinkList* self, int size, bool(*gt)(void*, void*)) {
     LinkNode* first = self->head->next;
     for (int i = self->length - 1 ; i > 0; i--) {
-        printf("eee\n");
         LinkNode* p1 = first;
         for (int j = 0; j < i; j++) {
             if (gt(p1 -> ele, p1 -> next -> ele)) {
-                printf("fff\n");
-                printf("%p\n", p1->ele);
-                printf("%p\n", p1->next->ele);
                 swap(p1->ele, p1 -> next -> ele, size);
             }
             p1 = p1 -> next;
