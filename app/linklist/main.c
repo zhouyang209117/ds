@@ -3,6 +3,7 @@
 #include <wchar.h>
 #include <locale.h>
 #include <string.h>
+#include <stdbool.h>
 #include "linklist/linklist.h"
 typedef struct Student_ {
     int num;
@@ -13,6 +14,14 @@ typedef struct Student_ {
 void printStu(void* stu) {
     Student* tmp = (Student*)stu;
     printf("num=%d,name=%ls\n", tmp->num, tmp->name);
+}
+
+bool equal(void* stu1, void* stu2) {
+    if (((Student*)stu1)->num == ((Student*)stu2)->num) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 int main() {
@@ -35,5 +44,9 @@ int main() {
         return 1;
     }
     list->Traverse(list, printStu);
+    result = list->Find(list, &stu2, equal);
+    printf("found index:%d\n", result);
+    printf("get result:\n");
+    printStu(list->Get(list, 0));
     return 0;
 }
