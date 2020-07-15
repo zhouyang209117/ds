@@ -108,14 +108,11 @@ void step2() {
     fclose(fin);
     list->Sort(list, sizeof(Node), lt);
     FILE* fout = fopen ("3.txt","w");
-    LinkNode* current = NULL;
-    do {
-        current = list->Next(list, current);
-        if (current != NULL) {
-            Node* node = (Node*)(current->ele);
-            fwprintf(fout, L"%lc,%d\n", node->Char, node->num);
-        }
-    } while(current != NULL);
+    Iterator *ite = list->CreateIterator(list);
+    while (ite->hasNext(ite)) {
+        Node* node = (Node*)(ite->next(ite));
+        fwprintf(fout, L"%lc,%d\n", node->Char, node->num);
+    }
     fclose(fout);
 }
 

@@ -57,15 +57,13 @@ int main() {
     printf("found index:%d\n", result);
     printf("get result:\n");
     printStu(list->Get(list, 0));
+    printf("sort\n");
     list->Sort(list, sizeof(Student), gt);
     list->Traverse(list, printStu);
     printf("next:\n");
-    LinkNode* current = NULL;
-    do {
-        current = list->Next(list, current);
-        if (current != NULL) {
-            printStu((Student*)(current->ele));
-        }
-    } while(current != NULL);
+    Iterator *ite = list->CreateIterator(list);
+    while (ite->hasNext(ite)) {
+        printStu(ite->next(ite));
+    }
     return 0;
 }

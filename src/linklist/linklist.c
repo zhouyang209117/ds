@@ -20,9 +20,9 @@ LinkList* CreateLinkList() {
     list->Add = Add;
     list->Get = Get;
     list->Find = Find;
-    list->Next = Next;
     list->Traverse = Traverse;
     list->Sort = Sort;
+    list->CreateIterator = CreateIterator;
     return list;
 }
 
@@ -68,14 +68,14 @@ int Find(LinkList* self, void* data, bool(*equal)(void*, void*)) {
     return -1;
 }
 
-LinkNode* Next(LinkList* self, LinkNode* current) {
-    if (self == NULL) {
-        return NULL;
-    }
-    if (current == NULL) {
-        return self->head->next;
-    }
-    return current->next;
+void* Next(Iterator* self) {
+    void* data = self->current->ele;
+    self->current = self->current->next;
+    return data;
+}
+
+bool HasNext(Iterator* self) {
+    return self->current != NULL;
 }
 
 void Traverse(LinkList* self, void(*traverse)(void*)) {
@@ -97,4 +97,12 @@ void Sort(LinkList* self, int size, bool(*gt)(void*, void*)) {
             p1 = p1 -> next;
         }
     }
+}
+
+Iterator* CreateIterator(LinkList* self) {
+    Iterator* ite = (Iterator*)malloc(sizeof(Iterator));
+    ite->current = self->head->next;
+    ite->next = Next;
+    ite->hasNext = HasNext;
+    return ite;
 }
