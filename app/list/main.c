@@ -4,7 +4,7 @@
 #include <locale.h>
 #include <string.h>
 #include <stdbool.h>
-#include "list/list.h"
+#include "list/se.h"
 typedef struct Student_ {
     int num;
     wchar_t* name;

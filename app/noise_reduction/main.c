@@ -4,7 +4,7 @@
 #include <locale.h>
 #include <string.h>
 #include <stdbool.h>
-#include "linklist/linklist.h"
+#include "list/link.h"
 
 #define CN_START 19968
 #define CN_END 40869

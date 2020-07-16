@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "linklist/linklist.h"
+#include "list/link.h"
 
 void swap(void* a, void* b, int size) {
     char* tmp = (char*)malloc(size);
