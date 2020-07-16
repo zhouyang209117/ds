@@ -40,8 +40,10 @@ Student* CreateStudent(int num, wchar_t* name) {
 int main() {
     setlocale(LC_ALL, "zh_CN.UTF-8");
     SqList* list = CreateSqList(sizeof(Student));
-    for (int i = 0; i < 3; i++) {
-        Student* stu = CreateStudent(i, L"张三");
+    for (int i = 0; i < 20; i++) {
+        wchar_t* name = (wchar_t*)malloc(sizeof(wchar_t) * 10);
+        swprintf(name, 10, L"%s%d", "张三", i);
+        Student* stu = CreateStudent(i, name);
         list->Add(list, 0, (void*)stu, sizeof(Student));
     }
     printf("%ls:\n", L"遍历结果");
