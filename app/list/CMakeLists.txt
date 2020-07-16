@@ -1,6 +1,6 @@
-add_executable(list_se.out se.c)
-target_link_libraries(list_se.out PUBLIC list_se)
-target_compile_options(list_se.out PRIVATE -Wall)
+add_executable(list_sq.out sq.c)
+target_link_libraries(list_sq.out PUBLIC list_sq)
+target_compile_options(list_sq.out PRIVATE -Wall)
 
 add_executable(list_link.out link.c)
 target_link_libraries(list_link.out PUBLIC list_link)

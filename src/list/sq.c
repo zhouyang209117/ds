@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-#include "list/se.h"
+#include "list/sq.h"
 
 SqList* CreateSqList(int eleSize) {
     SqList* sqList = (SqList*)malloc(sizeof(SqList));
