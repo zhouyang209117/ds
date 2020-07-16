@@ -62,7 +62,7 @@ int Remove(SqList* self, int index, int size) {
     }
     self->length -= 1;
     if (self->length * 2 < self->total && self->total > SE_LIST_INIT_SIZE) {
-        self->ele = (char*)realloc(self->ele, self->total / 2);
+        self->ele = (char*)realloc(self->ele, (self->total / 2) * size);
         self->total = self->total / 2;
     }
     return 0;
