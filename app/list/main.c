@@ -13,6 +13,10 @@ typedef struct Student_ {
 
 void printStu(void* stu) {
     Student* tmp = (Student*)stu;
+    if (tmp == NULL) {
+        printf("null pointer error\n");
+        return;
+    }
     printf("num=%d,name=%ls\n", tmp->num, tmp->name);
 }
 
@@ -28,15 +32,15 @@ bool equal(void* s1, void* s2) {
 
 int main() {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    SqList* list = CreateSqList(10, sizeof(Student));
+    SqList* list = CreateSqList(sizeof(Student));
     Student stu1;
     stu1.num = 1;
     stu1.name = L"张三1";
     Student stu2;
     stu2.num = 2;
     stu2.name = L"张三2";
-    list->Add(list, (void*)(&stu1), sizeof(Student));
-    list->Add(list, (void*)(&stu2), sizeof(Student));
+    list->Add(list, 0, (void*)(&stu1), sizeof(Student));
+    list->Add(list, 0, (void*)(&stu2), sizeof(Student));
     Student* stuSrc = list->Get(list, 0, sizeof(Student));
     printf("num=%d,name=%ls\n", stuSrc->num, stuSrc->name);
     printf("%ls:\n", L"遍历结果");

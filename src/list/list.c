@@ -4,10 +4,10 @@
 #include <stdbool.h>
 #include "list/list.h"
 
-SqList* CreateSqList(int totalLen, int eleSize) {
+SqList* CreateSqList(int eleSize) {
     SqList* sqList = (SqList*)malloc(sizeof(SqList));
-    sqList->total = totalLen;
-    sqList->ele = (char*)malloc(totalLen * eleSize);
+    sqList->total = SE_LIST_INIT_SIZE;
+    sqList->ele = (char*)malloc(eleSize * SE_LIST_INIT_SIZE);
     sqList->length = 0;
 
     sqList->Add = Add;
@@ -19,12 +19,18 @@ SqList* CreateSqList(int totalLen, int eleSize) {
     return sqList;
 }
 
-int Add(SqList* self, void* data, int size) {
-    if (self->length == self->total) {
+int Add(SqList* self, int index, void* data, int size) {
+    if (index < 0 || index > self->length) {
         return 1;
     }
-    int offset = self->length * size;
-    memcpy(self->ele + offset, data, size);
+    if (self->length == self->total) {
+        self->ele = (char*)realloc(self->ele, (self->length * 2) * size);
+        self->total = self->length * 2;
+    }
+    for (int i = self->length - 1; i >= index; i--) {
+        memcpy(self->ele + (i + 1) * size, self->ele + i * size, size);
+    }
+    memcpy(self->ele + index * size, data, size);
     self->length += 1;
     return 0;
 }
@@ -55,6 +61,10 @@ int Remove(SqList* self, int index, int size) {
         memcpy(self->ele + offset1, self->ele + offset2, size);
     }
     self->length -= 1;
+    if (self->length * 2 < self->total && self->total > SE_LIST_INIT_SIZE) {
+        self->ele = (char*)realloc(self->ele, self->total / 2);
+        self->total = self->total / 2;
+    }
     return 0;
 }
 
