@@ -46,6 +46,11 @@ int main() {
         Student* stu = CreateStudent(i, name);
         list->Add(list, 0, (void*)stu, sizeof(Student));
     }
+    printf("next:\n");
+    Iterator *ite = list->CreateIterator(list);
+    while (ite->hasNext(ite)) {
+        printStu(ite->next(ite, sizeof(Student)));
+    }
     printf("%ls:\n", L"遍历结果");
     list->Traverse(list, sizeof(Student), printStu);
     printf("%ls:\n", L"修改");
