@@ -39,7 +39,7 @@ void* Get(SqList* self, int index, int size) {
     if (index >= self->length) {
         return NULL;
     }
-    return self->ele + (self->length - 1) * size;
+    return self->ele + index * size;
 }
 
 int Set(SqList* self, int index, int size, void* data) {
