@@ -15,6 +15,7 @@ SqList* CreateSqList(int eleSize) {
     sqList->Set = Set;
     sqList->Remove = Remove;
     sqList->Find = Find;
+    sqList->Sort = Sort;
     sqList->Traverse = Traverse;
     sqList->CreateIterator = CreateIterator;
     return sqList;
@@ -83,6 +84,23 @@ void Traverse(SqList* self, int size, void(*traverse)(void*)) {
     for (int i = 0; i < self->length; i++) {
         char* current = self->ele + size * i;
         traverse((void*)current);
+    }
+}
+
+void swap(void* a, void* b, int size) {
+    char* tmp = (char*)malloc(size);
+    memcpy(tmp, a, size);
+    memcpy(a, b, size);
+    memcpy(b, tmp, size);
+}
+
+void Sort(SqList* self, int size, bool(*gt)(void*, void*)) {
+    for (int i = self->length - 1; i > 0; i--) {
+        for (int j = 0; j < i; j++) {
+            if (gt(self->ele + j * size, self->ele + (j + 1) * size)) {
+                swap(self->ele + j * size, self->ele + (j + 1) * size, size);
+            }
+        }
     }
 }
 

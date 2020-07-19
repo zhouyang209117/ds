@@ -19,6 +19,7 @@ typedef struct SqList_ {
     int (*Set)(struct SqList_*, int, int, void*);
     int (*Remove)(struct SqList_*, int, int);
     int (*Find)(struct SqList_*, void*, int, bool(*)(void*, void*));
+    void (*Sort)(struct SqList_*, int, bool(*)(void*, void*));
     void (*Traverse)(struct SqList_*, int, void(*)(void*));
     Iterator* (*CreateIterator)(struct SqList_*);
 }SqList;
@@ -29,6 +30,7 @@ void* Get(SqList*, int, int);
 int Set(struct SqList_*, int, int, void*);
 int Remove(struct SqList_*, int, int);
 int Find(struct SqList_*, void*, int, bool(*)(void*, void*));
+void Sort(struct SqList_*, int, bool(*)(void*, void*));
 void Traverse(struct SqList_*, int, void(*)(void*));
 Iterator* CreateIterator(struct SqList_*);
 #endif

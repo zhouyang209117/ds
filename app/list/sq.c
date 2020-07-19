@@ -30,6 +30,16 @@ bool equal(void* s1, void* s2) {
     }
 }
 
+bool gt(void* a1, void* a2) {
+    Student* s1 = (Student*)a1;
+    Student* s2 = (Student*)a2;
+    if (s1->num > s2->num) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 Student* CreateStudent(int num, wchar_t* name) {
     Student* stu = (Student*)malloc(sizeof(Student));
     stu->num = num;
@@ -69,5 +79,8 @@ int main() {
     list->Traverse(list, sizeof(Student), printStu);
     int index = list->Find(list, &stu3, sizeof(Student), equal);
     printf("%d\n", index);
+    printf("sort:\n");
+    list->Sort(list, sizeof(Student), gt);
+    list->Traverse(list, sizeof(Student), printStu);
     return 0;
 }
