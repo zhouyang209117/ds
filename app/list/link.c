@@ -43,7 +43,7 @@ Student* CreateStudent(int num ,wchar_t* name) {
 
 int main() {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    LinkList* list = CreateLinkList();
+    LinkList* list = CreateLinkList(sizeof(Student));
     Student* stu1 = CreateStudent(100, L"张三1");
     Student* stu2 = CreateStudent(1, L"张三2");
     Student* stu3 = CreateStudent(90, L"张三3");
@@ -58,7 +58,7 @@ int main() {
     printf("get result:\n");
     printStu(list->Get(list, 0));
     printf("sort\n");
-    list->Sort(list, sizeof(Student), gt);
+    list->Sort(list, gt);
     list->Traverse(list, printStu);
     printf("next:\n");
     Iterator *ite = list->CreateIterator(list);

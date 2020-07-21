@@ -99,14 +99,14 @@ void step1() {
 }
 
 void step2() {
-    LinkList* list = CreateLinkList();
+    LinkList* list = CreateLinkList(sizeof(Node));
     wchar_t wc;
     FILE* fin = fopen ("2.txt","r");
     while ((wc = fgetwc(fin)) != WEOF){
         processChar(list, wc);
     }
     fclose(fin);
-    list->Sort(list, sizeof(Node), lt);
+    list->Sort(list, lt);
     FILE* fout = fopen ("3.txt","w");
     Iterator *ite = list->CreateIterator(list);
     while (ite->hasNext(ite)) {

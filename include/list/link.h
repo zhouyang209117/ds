@@ -15,19 +15,20 @@ typedef struct Iterator_ {
 typedef struct LinkList_ {
     LinkNode *head;
     size_t length;
+    int dataSize;
     int (*Add)(struct LinkList_*, int, void*, int);
     void* (*Get)(struct LinkList_*, int);
     int (*Find)(struct LinkList_*, void*, bool(*)(void*, void*));
     void (*Traverse)(struct LinkList_*, void(*)(void*));
-    void (*Sort)(struct LinkList_*, int size, bool(*)(void*, void*));
+    void (*Sort)(struct LinkList_*, bool(*)(void*, void*));
     Iterator* (*CreateIterator)(struct LinkList_*);
 }LinkList;
 
-LinkList* CreateLinkList();
-int Add(struct LinkList_*, int, void*, int);
+LinkList* CreateLinkList(int);
+int Add(struct LinkList_*, int, void*);
 void* Get(struct LinkList_*, int);
 int Find(struct LinkList_*, void*, bool(*)(void*, void*));
 void Traverse(struct LinkList_*, void(*)(void*));
-void Sort(struct LinkList_*, int size, bool(*)(void*, void*));
+void Sort(struct LinkList_*, bool(*)(void*, void*));
 Iterator* CreateIterator(struct LinkList_*);
 #endif

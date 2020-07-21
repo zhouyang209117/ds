@@ -11,11 +11,12 @@ void swap(void* a, void* b, int size) {
     memcpy(b, tmp, size);
 }
 
-LinkList* CreateLinkList() {
+LinkList* CreateLinkList(int dataSize) {
     LinkNode* head = (LinkNode*)malloc(sizeof(LinkNode));
     head->ele = NULL;
     head->next = NULL;
     LinkList* list = (LinkList*)malloc(sizeof(LinkList));
+    list->dataSize = dataSize;
     list->head = head;
     list->Add = Add;
     list->Get = Get;
@@ -26,7 +27,7 @@ LinkList* CreateLinkList() {
     return list;
 }
 
-int Add(LinkList* self, int index, void* data, int size) {
+int Add(LinkList* self, int index, void* data) {
     if (index < 0 || index > self->length) {
         return 1;
     }
@@ -35,8 +36,8 @@ int Add(LinkList* self, int index, void* data, int size) {
         tmp = tmp->next;
     }
     LinkNode* newNode = (LinkNode*)malloc(sizeof(LinkNode));
-    char* newData = (char*)malloc(size);
-    memcpy(newData, data, size);
+    char* newData = (char*)malloc(self->dataSize);
+    memcpy(newData, data, self->dataSize);
     newNode->ele = newData;
     newNode->next = tmp->next;
     tmp->next = newNode;
@@ -86,13 +87,13 @@ void Traverse(LinkList* self, void(*traverse)(void*)) {
     }
 }
 
-void Sort(LinkList* self, int size, bool(*gt)(void*, void*)) {
+void Sort(LinkList* self, bool(*gt)(void*, void*)) {
     LinkNode* first = self->head->next;
     for (int i = self->length - 1 ; i > 0; i--) {
         LinkNode* p1 = first;
         for (int j = 0; j < i; j++) {
             if (gt(p1 -> ele, p1 -> next -> ele)) {
-                swap(p1->ele, p1 -> next -> ele, size);
+                swap(p1->ele, p1 -> next -> ele, self->dataSize);
             }
             p1 = p1 -> next;
         }
