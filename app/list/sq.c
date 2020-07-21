@@ -54,7 +54,7 @@ int main() {
         wchar_t* name = (wchar_t*)malloc(sizeof(wchar_t) * 10);
         swprintf(name, 10, L"%s%d", "张三", i);
         Student* stu = CreateStudent(i, name);
-        list->Add(list, 0, (void*)stu, sizeof(Student));
+        list->Add(list, 0, (void*)stu);
     }
     printf("next:\n");
     Iterator *ite = list->CreateIterator(list);
@@ -62,25 +62,25 @@ int main() {
         printStu(ite->next(ite, sizeof(Student)));
     }
     printf("%ls:\n", L"遍历结果");
-    list->Traverse(list, sizeof(Student), printStu);
+    list->Traverse(list, printStu);
     printf("%ls:\n", L"修改");
     Student stu3;
     stu3.num = 3;
     stu3.name = L"张三3";
-    list->Set(list, 1, sizeof(Student), &stu3);
+    list->Set(list, 1, &stu3);
     printf("%ls:\n", L"遍历结果");
-    list->Traverse(list, sizeof(Student), printStu);
+    list->Traverse(list, printStu);
     printf("%ls:\n", L"删除");
-    int result = list->Remove(list, 0, sizeof(Student));
+    int result = list->Remove(list, 0);
     if (result != 0) {
         printf("delete error\n");
     }
     printf("%ls:\n", L"遍历结果");
-    list->Traverse(list, sizeof(Student), printStu);
-    int index = list->Find(list, &stu3, sizeof(Student), equal);
+    list->Traverse(list, printStu);
+    int index = list->Find(list, &stu3, equal);
     printf("%d\n", index);
     printf("sort:\n");
-    list->Sort(list, sizeof(Student), gt);
-    list->Traverse(list, sizeof(Student), printStu);
+    list->Sort(list, gt);
+    list->Traverse(list, printStu);
     return 0;
 }

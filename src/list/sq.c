@@ -9,7 +9,7 @@ SqList* CreateSqList(int eleSize) {
     sqList->total = SE_LIST_INIT_SIZE;
     sqList->ele = (char*)malloc(eleSize * SE_LIST_INIT_SIZE);
     sqList->length = 0;
-
+    sqList->dataSize = eleSize;
     sqList->Add = Add;
     sqList->Get = Get;
     sqList->Set = Set;
@@ -21,58 +21,59 @@ SqList* CreateSqList(int eleSize) {
     return sqList;
 }
 
-int Add(SqList* self, int index, void* data, int size) {
+int Add(SqList* self, int index, void* data) {
     if (index < 0 || index > self->length) {
         return 1;
     }
     if (self->length == self->total) {
-        self->ele = (char*)realloc(self->ele, (self->length * 2) * size);
+        self->ele = (char*)realloc(self->ele, (self->length * 2) * self->dataSize);
         self->total = self->length * 2;
     }
     for (int i = self->length - 1; i >= index; i--) {
-        memcpy(self->ele + (i + 1) * size, self->ele + i * size, size);
+        memcpy(self->ele + (i + 1) * self->dataSize,
+               self->ele + i * self->dataSize, self->dataSize);
     }
-    memcpy(self->ele + index * size, data, size);
+    memcpy(self->ele + index * self->dataSize, data, self->dataSize);
     self->length += 1;
     return 0;
 }
 
-void* Get(SqList* self, int index, int size) {
+void* Get(SqList* self, int index) {
     if (index >= self->length) {
         return NULL;
     }
-    return self->ele + index * size;
+    return self->ele + index * self->dataSize;
 }
 
-int Set(SqList* self, int index, int size, void* data) {
+int Set(SqList* self, int index, void* data) {
     if (index >= self->length) {
         return 1;
     }
-    int offset = index * size;
-    memcpy(self->ele + offset, data, size);
+    int offset = index * self->dataSize;
+    memcpy(self->ele + offset, data, self->dataSize);
     return 0;
 }
 
-int Remove(SqList* self, int index, int size) {
+int Remove(SqList* self, int index) {
     if (index < 0 || index >= self->length) {
         return 1;
     }
     for (int i = index; i < self->length - 1; i++) {
-        int offset1 = i * size;
-        int offset2 = (i + 1) * size;
-        memcpy(self->ele + offset1, self->ele + offset2, size);
+        int offset1 = i * self->dataSize;
+        int offset2 = (i + 1) * self->dataSize;
+        memcpy(self->ele + offset1, self->ele + offset2, self->dataSize);
     }
     self->length -= 1;
     if (self->length * 2 < self->total && self->total > SE_LIST_INIT_SIZE) {
-        self->ele = (char*)realloc(self->ele, (self->total / 2) * size);
+        self->ele = (char*)realloc(self->ele, (self->total / 2) * self->dataSize);
         self->total = self->total / 2;
     }
     return 0;
 }
 
-int Find(SqList* self, void* data, int size, bool(*equal)(void*, void*)) {
+int Find(SqList* self, void* data, bool(*equal)(void*, void*)) {
     for (int i = 0; i < self->length; i++) {
-        char* current = self->ele + size * i;
+        char* current = self->ele + self->dataSize * i;
         if (equal(data, current)) {
             return i;
         }
@@ -80,9 +81,9 @@ int Find(SqList* self, void* data, int size, bool(*equal)(void*, void*)) {
     return -1;
 }
 
-void Traverse(SqList* self, int size, void(*traverse)(void*)) {
+void Traverse(SqList* self, void(*traverse)(void*)) {
     for (int i = 0; i < self->length; i++) {
-        char* current = self->ele + size * i;
+        char* current = self->ele + self->dataSize * i;
         traverse((void*)current);
     }
 }
@@ -94,11 +95,11 @@ void swap(void* a, void* b, int size) {
     memcpy(b, tmp, size);
 }
 
-void Sort(SqList* self, int size, bool(*gt)(void*, void*)) {
+void Sort(SqList* self, bool(*gt)(void*, void*)) {
     for (int i = self->length - 1; i > 0; i--) {
         for (int j = 0; j < i; j++) {
-            if (gt(self->ele + j * size, self->ele + (j + 1) * size)) {
-                swap(self->ele + j * size, self->ele + (j + 1) * size, size);
+            if (gt(self->ele + j * self->dataSize, self->ele + (j + 1) * self->dataSize)) {
+                swap(self->ele + j * self->dataSize, self->ele + (j + 1) * self->dataSize, self->dataSize);
             }
         }
     }
