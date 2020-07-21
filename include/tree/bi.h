@@ -12,9 +12,11 @@ typedef struct BiNode_ { // Binary tree node
 typedef struct Bi_ { // Binary tree
     int size;
     BiNode* root;
-    int (*Add)(struct Bi_*, void*, int, void*);
+    int (*Add)(struct Bi_*, void*, int, void*, int);
+    BiNode* (*Get)(struct Bi_*);
 }Bi;
 
 Bi* CreateBi();
-int Add(struct Bi_*, void*, int, void*);
+BiNode* Get(Bi*);
+int Add(struct Bi_*, void*, int, void*, int);
 #endif
