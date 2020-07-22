@@ -52,5 +52,9 @@ int main() {
     list->Add(list, 0, stu2);
     list->Add(list, 0, stu3);
     list->Add(list, 0, stu4);
+    Iterator *ite = CreateIterator(list);
+    while (ite->hasNext(ite)) {
+        printStu(ite->next(ite));
+    }
     return 0;
 }
