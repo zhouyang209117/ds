@@ -16,11 +16,12 @@ typedef struct LinkList_ {
     LinkNode *head;
     size_t length;
     int dataSize;
-    int (*Add)(struct LinkList_*, int, void*, int);
+    int (*Add)(struct LinkList_*, int, void*);
     void* (*Get)(struct LinkList_*, int);
     int (*Find)(struct LinkList_*, void*, bool(*)(void*, void*));
     void (*Traverse)(struct LinkList_*, void(*)(void*));
     void (*Sort)(struct LinkList_*, bool(*)(void*, void*));
+    int (*Delete)(struct LinkList_*, void*, bool(*)(void*, void*));
     Iterator* (*CreateIterator)(struct LinkList_*);
 }LinkList;
 
@@ -30,5 +31,6 @@ void* Get(struct LinkList_*, int);
 int Find(struct LinkList_*, void*, bool(*)(void*, void*));
 void Traverse(struct LinkList_*, void(*)(void*));
 void Sort(struct LinkList_*, bool(*)(void*, void*));
+int Delete(struct LinkList_*, void*, bool(*)(void*, void*));
 Iterator* CreateIterator(struct LinkList_*);
 #endif

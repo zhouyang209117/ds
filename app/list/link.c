@@ -48,10 +48,10 @@ int main() {
     Student* stu2 = CreateStudent(1, L"张三2");
     Student* stu3 = CreateStudent(90, L"张三3");
     Student* stu4 = CreateStudent(2, L"张三4");
-    list->Add(list, 0, stu1, sizeof(Student));
-    list->Add(list, 0, stu2, sizeof(Student));
-    list->Add(list, 0, stu3, sizeof(Student));
-    list->Add(list, 0, stu4, sizeof(Student));
+    list->Add(list, 0, stu1);
+    list->Add(list, 0, stu2);
+    list->Add(list, 0, stu3);
+    list->Add(list, 0, stu4);
     list->Traverse(list, printStu);
     int result = list->Find(list, stu2, equal);
     printf("found index:%d\n", result);
@@ -62,6 +62,12 @@ int main() {
     list->Traverse(list, printStu);
     printf("next:\n");
     Iterator *ite = list->CreateIterator(list);
+    while (ite->hasNext(ite)) {
+        printStu(ite->next(ite));
+    }
+    list->Delete(list, stu1, equal);
+    printf("deleted:\n");
+    ite = list->CreateIterator(list);
     while (ite->hasNext(ite)) {
         printStu(ite->next(ite));
     }

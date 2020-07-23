@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <code/code.h>
 #include "list/link.h"
 
 void swap(void* a, void* b, int size) {
@@ -24,6 +25,7 @@ LinkList* CreateLinkList(int dataSize) {
     list->Traverse = Traverse;
     list->Sort = Sort;
     list->CreateIterator = CreateIterator;
+    list->Delete = Delete;
     return list;
 }
 
@@ -69,6 +71,21 @@ int Find(LinkList* self, void* data, bool(*equal)(void*, void*)) {
     return -1;
 }
 
+int Delete(LinkList* self, void* data, bool(*eq)(void*, void*)) {
+    LinkNode* current = self->head;
+    while (current->next != NULL) {
+        if (eq(current->next->ele, data)) {
+            LinkNode* tmp = current->next;
+            current->next = tmp->next;
+            free(tmp);
+            self->length -= 1;
+            return 0;
+        }
+        current = current->next;
+    }
+    return ENOTFOUND;
+}
+
 void* Next(Iterator* self) {
     void* data = self->current->ele;
     self->current = self->current->next;
@@ -92,10 +109,10 @@ void Sort(LinkList* self, bool(*gt)(void*, void*)) {
     for (int i = self->length - 1 ; i > 0; i--) {
         LinkNode* p1 = first;
         for (int j = 0; j < i; j++) {
-            if (gt(p1 -> ele, p1 -> next -> ele)) {
-                swap(p1->ele, p1 -> next -> ele, self->dataSize);
+            if (gt(p1->ele, p1->next->ele)) {
+                swap(p1->ele, p1->next->ele, self->dataSize);
             }
-            p1 = p1 -> next;
+            p1 = p1->next;
         }
     }
 }
