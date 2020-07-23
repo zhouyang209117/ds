@@ -23,6 +23,7 @@ LinkList* CreateLinkList(int dataSize) {
     list->head = head;
     list->length = 0;
     list->Add = Add;
+    list->Delete = Delete;
     return list;
 }
 
@@ -78,4 +79,22 @@ Iterator* CreateIterator(LinkList* self) {
     ite->next = Next;
     ite->hasNext = HasNext;
     return ite;
+}
+
+int Delete(LinkList* self, void* data, bool(*eq)(void*, void*)) {
+    if (self == NULL) {
+        return EAGAIN;
+    }
+    LinkNode* current = self->head;
+    while (current->next != self->head) {
+        if (eq(current->next->ele, data)) {
+            LinkNode* tmp = current->next;
+            current->next = current->next->next;
+            self->length -= 1;
+            free(tmp);
+            return 0;
+        }
+        current = current->next;
+    }
+    return ENOTFOUND;
 }

@@ -18,10 +18,12 @@ typedef struct LinkList_ {
     size_t length;
     int dataSize;
     int (*Add)(struct LinkList_*, int, void*);
+    int (*Delete)(struct LinkList_*, void*, bool(*eq)(void*, void*));
     Iterator* (*CreateIterator)(struct LinkList_*);
 }LinkList;
 
 LinkList* CreateLinkList(int);
 int Add(LinkList*, int, void*);
+int Delete(struct LinkList_*, void*, bool(*eq)(void*, void*));
 Iterator* CreateIterator(struct LinkList_*);
 #endif

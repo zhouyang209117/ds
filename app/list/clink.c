@@ -56,5 +56,16 @@ int main() {
     while (ite->hasNext(ite)) {
         printStu(ite->next(ite));
     }
+    Student* tmp = CreateStudent(100, L"a");
+    int deleteResult = list->Delete(list, tmp, equal);
+    if (deleteResult == 0) {
+        printf("delete ok\n");
+    } else {
+        printf("delete error\n");
+    }
+    ite = CreateIterator(list);
+    while (ite->hasNext(ite)) {
+        printStu(ite->next(ite));
+    }
     return 0;
 }

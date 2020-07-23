@@ -4,5 +4,6 @@
 #define ENOENT 2
 #define EAGAIN 11
 #define ENOMEM 12
+#define ENOTFOUND 133
 
 #endif
