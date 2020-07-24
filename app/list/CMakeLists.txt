@@ -13,3 +13,5 @@ target_compile_options(noise.out PRIVATE -Wall)
 add_executable(list_clink.out clink.c)
 target_link_libraries(list_clink.out PUBLIC list_clink)
 target_compile_options(list_clink.out PRIVATE -Wall)
+
+add_executable(simple_link.out simple_sq.c)
