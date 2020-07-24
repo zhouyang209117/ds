@@ -31,7 +31,27 @@ int Add(SqList* list, int index, int data) {
         *(list->ele + i) = *(list->ele + i - 1);
     }
     *(list->ele + i) = data;
-    list->length += 1;
+    list->length++;
+    return 0;
+}
+
+int Get(SqList* list, int data) {
+    for (int i = 0; i < list->length; i++) {
+        if (*(list->ele + i) == data) {
+            return i;
+        }
+    }
+    return ENOTFOUND;
+}
+
+int Delete(SqList* list, int index) {
+    if (index < 0 || index >= list->length) {
+        return ENOENT;
+    }
+    for (int i = index + 1; i < list->length; i++) {
+        *(list->ele + i - 1) = *(list->ele + i);
+    }
+    list->length--;
     return 0;
 }
 
@@ -43,6 +63,15 @@ int main() {
     Add(list, 0, 14);
     Add(list, 0, 15);
     Add(list, 1, 16);
+    for (int i = 0; i < list->length; i++) {
+        printf("%d\n", *(list->ele + i));
+    }
+    int index = Get(list, 16);
+    int result = Delete(list, index);
+    if (result != 0) {
+        printf("delete error\n");
+    }
+    printf("after delete\n");
     for (int i = 0; i < list->length; i++) {
         printf("%d\n", *(list->ele + i));
     }
