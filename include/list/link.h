@@ -17,8 +17,7 @@ typedef struct LinkList_ {
     size_t length;
     int dataSize;
     int (*Add)(struct LinkList_*, int, void*);
-    void* (*Get)(struct LinkList_*, int);
-    int (*Find)(struct LinkList_*, void*, bool(*)(void*, void*));
+    void* (*Find)(struct LinkList_*, void*, bool(*)(void*, void*));
     void (*Traverse)(struct LinkList_*, void(*)(void*));
     void (*Sort)(struct LinkList_*, bool(*)(void*, void*));
     int (*Delete)(struct LinkList_*, void*, bool(*)(void*, void*));
@@ -27,8 +26,7 @@ typedef struct LinkList_ {
 
 LinkList* CreateLinkList(int);
 int Add(struct LinkList_*, int, void*);
-void* Get(struct LinkList_*, int);
-int Find(struct LinkList_*, void*, bool(*)(void*, void*));
+void* Find(struct LinkList_*, void*, bool(*)(void*, void*));
 void Traverse(struct LinkList_*, void(*)(void*));
 void Sort(struct LinkList_*, bool(*)(void*, void*));
 int Delete(struct LinkList_*, void*, bool(*)(void*, void*));

@@ -53,10 +53,9 @@ int main() {
     list->Add(list, 0, stu3);
     list->Add(list, 0, stu4);
     list->Traverse(list, printStu);
-    int result = list->Find(list, stu2, equal);
-    printf("found index:%d\n", result);
-    printf("get result:\n");
-    printStu(list->Get(list, 0));
+    printf("find\n");
+    Student* current = list->Find(list, stu2, equal);
+    printStu(current);
     printf("sort\n");
     list->Sort(list, gt);
     list->Traverse(list, printStu);

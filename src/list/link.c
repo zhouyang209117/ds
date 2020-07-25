@@ -20,7 +20,6 @@ LinkList* CreateLinkList(int dataSize) {
     list->dataSize = dataSize;
     list->head = head;
     list->Add = Add;
-    list->Get = Get;
     list->Find = Find;
     list->Traverse = Traverse;
     list->Sort = Sort;
@@ -47,28 +46,15 @@ int Add(LinkList* self, int index, void* data) {
     return 0;
 }
 
-void* Get(LinkList* self, int index) {
-    if (index < 0 || index >= self->length) {
-        return NULL;
-    }
+void* Find(LinkList* self, void* data, bool(*equal)(void*, void*)) {
     LinkNode* tmp = self->head->next;
-    for (int i = 0; i < index; i++) {
-        tmp = tmp->next;
-    }
-    return tmp->ele;
-}
-
-int Find(LinkList* self, void* data, bool(*equal)(void*, void*)) {
-    LinkNode* tmp = self->head->next;
-    int index = 0;
     while (tmp != NULL) {
         if (equal(tmp->ele, data)) {
-            return index;
+            return tmp->ele;
         }
         tmp = tmp->next;
-        index++;
     }
-    return -1;
+    return NULL;
 }
 
 int Delete(LinkList* self, void* data, bool(*eq)(void*, void*)) {

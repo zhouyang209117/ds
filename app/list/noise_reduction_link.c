@@ -44,17 +44,16 @@ void processChar(LinkList* list, wchar_t w) {
     }
     Node newNode;
     newNode.Char = w;
-    int index = list->Find(list, &newNode, equal);
-    if (index == -1) {
+    Node* existNode = list->Find(list, &newNode, equal);
+    if (existNode == NULL) {
         newNode.num = 1;
-        int result = list->Add(list, 0, &newNode, sizeof(Node));
+        int result = list->Add(list, 0, &newNode);
         if (result != 0) {
             printf("add error\n");
             return;
         }
     } else {
-        Node* current = (Node*)(list->Get(list, index));
-        current->num += 1;
+        existNode->num += 1;
     }
 }
 
