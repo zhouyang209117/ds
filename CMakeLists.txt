@@ -1,9 +1,10 @@
 cmake_minimum_required(VERSION 3.11)
-project(ds C)
+project(ds)
 
-set(CMAKE_C_STANDARD 99)
+set(CMAKE_CXX_STANDARD 11)
 include_directories(include)
 add_subdirectory (src/list)
 add_subdirectory (src/tree)
 add_subdirectory (app/list)
 add_subdirectory (app/tree)
+add_subdirectory (tests)
