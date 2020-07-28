@@ -1,5 +1,7 @@
-set(CMAKE_CXX_STANDARD 11)
 set (PROJECT_LINK_LIBS /usr/local/lib/libgtest.a)
-file(GLOB SOURCES "./*.cpp")
-add_executable(calc_test ${SOURCES})
-target_link_libraries(calc_test ${PROJECT_LINK_LIBS} )
+add_executable(calc_test.out
+        list/sq.cpp
+        main.cpp)
+target_link_libraries(calc_test.out
+        PUBLIC list_sq
+        PUBLIC ${PROJECT_LINK_LIBS})

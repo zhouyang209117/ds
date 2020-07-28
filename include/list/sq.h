@@ -1,6 +1,10 @@
 #ifndef SQ_LIST_H
 #define SQ_LIST_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define SE_LIST_INIT_SIZE 16 // 为了动态扩展,缩短方便,必须是偶数
 typedef struct Iterator_ {
     void* ele;
@@ -34,4 +38,8 @@ int Find(struct SqList_*, void*, bool(*)(void*, void*));
 void Sort(struct SqList_*, bool(*)(void*, void*));
 void Traverse(struct SqList_*, void(*)(void*));
 Iterator* CreateIterator(struct SqList_*);
+#ifdef __cplusplus
+}
+#endif
+
 #endif
