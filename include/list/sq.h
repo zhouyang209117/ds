@@ -1,6 +1,6 @@
 #ifndef SQ_LIST_H
 #define SQ_LIST_H
-
+#include <stdbool.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -10,8 +10,9 @@ typedef struct Iterator_ {
     void* ele;
     int index;
     int length;
+    int dataSize;
     bool (*hasNext)(struct Iterator_*);
-    void* (*next)(struct Iterator_*,  int);
+    void* (*next)(struct Iterator_*);
 } Iterator;
 
 typedef struct SqList_ {
@@ -38,6 +39,7 @@ int Find(struct SqList_*, void*, bool(*)(void*, void*));
 void Sort(struct SqList_*, bool(*)(void*, void*));
 void Traverse(struct SqList_*, void(*)(void*));
 Iterator* CreateIterator(struct SqList_*);
+
 #ifdef __cplusplus
 }
 #endif

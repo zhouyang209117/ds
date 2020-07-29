@@ -59,7 +59,7 @@ int main() {
     printf("next:\n");
     Iterator *ite = list->CreateIterator(list);
     while (ite->hasNext(ite)) {
-        printStu(ite->next(ite, sizeof(Student)));
+        printStu(ite->next(ite));
     }
     printf("%ls:\n", L"遍历结果");
     list->Traverse(list, printStu);

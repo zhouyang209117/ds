@@ -6,6 +6,9 @@
 
 SqList* CreateSqList(int eleSize) {
     SqList* sqList = (SqList*)malloc(sizeof(SqList));
+    if (sqList == NULL) {
+        return NULL;
+    }
     sqList->total = SE_LIST_INIT_SIZE;
     sqList->ele = (char*)malloc(eleSize * SE_LIST_INIT_SIZE);
     sqList->length = 0;
@@ -105,8 +108,8 @@ void Sort(SqList* self, bool(*gt)(void*, void*)) {
     }
 }
 
-void* Next(Iterator* self, int size) {
-    void* data = self->ele + (self->index * size);
+void* Next(Iterator* self) {
+    void* data = self->ele + (self->index * self->dataSize);
     self->index++;
     return data;
 }
@@ -118,6 +121,7 @@ bool HasNext(Iterator* self) {
 Iterator* CreateIterator(SqList* self) {
     Iterator* ite = (Iterator*)malloc(sizeof(Iterator));
     ite->length = self->length;
+    ite->dataSize = self->dataSize;
     ite->index = 0;
     ite->ele = self->ele;
     ite->hasNext = HasNext;

@@ -1,1 +1,0 @@
-add_library(tree_bi bi.c)
