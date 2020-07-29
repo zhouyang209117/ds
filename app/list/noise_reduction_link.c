@@ -67,16 +67,16 @@ bool lt(void* a1, void* a2) {
     }
 }
 
-void step1() {
+int step1() {
     FILE* fin = fopen ("1.txt","r");
     FILE* fout1 = fopen ("2.txt","w");
     if (fin == NULL) {
         printf("read file error\n");
-        return;
+        return 1;
     }
     if (fout1 == NULL) {
         printf("write file error\n");
-        return;
+        return 1;
     }
     bool needWrite = true;
     wchar_t wc;
@@ -95,6 +95,7 @@ void step1() {
     }
     fclose(fin);
     fclose(fout1);
+    return 0;
 }
 
 void step2() {
@@ -117,7 +118,10 @@ void step2() {
 
 int main() {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    step1();
+    int result = step1();
+    if (result != 0) {
+        return 1;
+    }
     step2();
     return 0;
 }

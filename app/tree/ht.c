@@ -2,9 +2,8 @@
 #include <wchar.h>
 #include <locale.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <list/sq.h>
-
-
 
 typedef struct {
     int num;
@@ -16,6 +15,7 @@ typedef struct {
     int parent;
     int left;
     int right;
+    bool used;
 }HTNode;
 
 Node* createNode(int num, wchar_t word) {
@@ -28,6 +28,10 @@ Node* createNode(int num, wchar_t word) {
 HTNode* createHTNode(int weight) {
     HTNode* newNode = (HTNode*)malloc(sizeof(HTNode));
     newNode->weight = weight;
+    newNode->parent = 0;
+    newNode->left = 0;
+    newNode->right = 0;
+    newNode->used = false;
     return newNode;
 }
 
@@ -37,6 +41,10 @@ SqList* getInput() {
     list->Add(list, list->length, createNode(2, L'国'));
     list->Add(list, list->length, createNode(3, L'人'));
     return list;
+}
+
+void update(SqList* htEle) {
+
 }
 
 int main() {
@@ -49,6 +57,8 @@ int main() {
         Node* current = (Node*)(ite->next(ite));
         htEle->Add(htEle, 0, createHTNode(current->num));
     }
-//    printf("hello world\n");
+    for (int i = input->length; i < 2 * input->length - 1; i++) {
+        htEle->Add(htEle, 0, createHTNode(0));
+    }
     return 0;
 }
