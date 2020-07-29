@@ -20,11 +20,15 @@ LinkList* CreateLinkList(int dataSize) {
     list->dataSize = dataSize;
     list->head = head;
     list->Add = Add;
+    list->Push = Push;
+    list->Pop = Pop;
+    list->Empty = Empty;
     list->Find = Find;
     list->Traverse = Traverse;
     list->Sort = Sort;
     list->CreateIterator = CreateIterator;
     list->Delete = Delete;
+    list->length = 0;
     return list;
 }
 
@@ -44,6 +48,25 @@ int Add(LinkList* self, int index, void* data) {
     tmp->next = newNode;
     self->length += 1;
     return 0;
+}
+
+int Push(LinkList* self, void* data) {
+    return Add(self, 0, data);
+}
+
+int Pop(LinkList* self) {
+    if (self->head->next == NULL) {
+        return ENOTFOUND;
+    }
+    LinkNode* tmp = self->head->next;
+    self->head->next = self->head->next->next;
+    self->length -= 1;
+    free(tmp);
+    return 0;
+}
+
+bool Empty(LinkList* self) {
+    return self->length == 0;
 }
 
 void* Find(LinkList* self, void* data, bool(*equal)(void*, void*)) {
