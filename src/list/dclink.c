@@ -5,7 +5,6 @@
 #include <code/code.h>
 #include "list/dclink.h"
 
-
 DCLList* CreateDCLList(int dataSize) {
     DCLNode* head = (DCLNode*)malloc(sizeof(DCLNode));
     if (head == NULL) {

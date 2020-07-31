@@ -19,3 +19,11 @@ add_executable(unittest_stack.out
 target_link_libraries(unittest_stack.out
         PUBLIC list_link
         PUBLIC ${PROJECT_LINK_LIBS})
+
+add_executable(unittest_tree_bi.out
+        tree/bi.cpp
+        main.cpp)
+target_link_libraries(unittest_tree_bi.out
+        PUBLIC list_sq
+        PUBLIC tree_bi
+        PUBLIC ${PROJECT_LINK_LIBS})

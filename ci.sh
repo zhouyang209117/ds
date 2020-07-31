@@ -13,3 +13,4 @@ cd ../..
 ./tests/unittest_list.out
 ./tests/unittest_dclink_list.out
 ./tests/unittest_stack.out
+./tests/unittest_tree_bi.out

@@ -36,7 +36,9 @@ int Add(SqList* self, int index, void* data) {
         memcpy(self->ele + (i + 1) * self->dataSize,
                self->ele + i * self->dataSize, self->dataSize);
     }
-    memcpy(self->ele + index * self->dataSize, data, self->dataSize);
+    if (data != NULL) {
+        memcpy(self->ele + index * self->dataSize, data, self->dataSize);
+    }
     self->length += 1;
     return 0;
 }

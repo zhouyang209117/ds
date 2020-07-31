@@ -35,7 +35,7 @@ int Add(SqList* list, int index, int data) {
     return 0;
 }
 
-int Get(SqList* list, int data) {
+int GetIndex(SqList* list, int data) {
     for (int i = 0; i < list->length; i++) {
         if (*(list->ele + i) == data) {
             return i;
@@ -56,7 +56,7 @@ int Delete(SqList* list, int index) {
 }
 
 int main() {
-    SqList* list = CreateSqList(100);
+    SqList* list = CreateSqList(10);
     Add(list, 0, 11);
     Add(list, 0, 12);
     Add(list, 0, 13);
@@ -66,7 +66,7 @@ int main() {
     for (int i = 0; i < list->length; i++) {
         printf("%d\n", *(list->ele + i));
     }
-    int index = Get(list, 16);
+    int index = GetIndex(list, 16);
     int result = Delete(list, index);
     if (result != 0) {
         printf("delete error\n");
