@@ -5,42 +5,42 @@
 extern "C" {
 #endif
 
-typedef struct LinkNode {
+typedef struct LLNode_ { // link list node
     void* ele;
-    struct LinkNode* next;
-}LinkNode;
+    struct LLNode_* next;
+}LLNode;
 
-typedef struct Iterator_ {
-    LinkNode* current;
-    bool (*hasNext)(struct Iterator_*);
-    void* (*next)(struct Iterator_*);
-} Iterator;
+typedef struct LLIterator_ { // link list iterator
+    LLNode* current;
+    bool    (*HasNext)(struct LLIterator_*);
+    void*   (*Next)   (struct LLIterator_*);
+} LLIterator;
 
-typedef struct LinkList_ {
-    LinkNode *head;
-    size_t length;
-    int dataSize;
-    int (*Add)(struct LinkList_*, int, void*);
-    int (*Push)(struct LinkList_*, void*);
-    int (*Pop)(struct LinkList_*);
-    bool (*Empty)(struct LinkList_*);
-    void* (*Find)(struct LinkList_*, void*, bool(*)(void*, void*));
-    void (*Traverse)(struct LinkList_*, void(*)(void*));
-    void (*Sort)(struct LinkList_*, bool(*)(void*, void*));
-    int (*Delete)(struct LinkList_*, void*, bool(*)(void*, void*));
-    Iterator* (*CreateIterator)(struct LinkList_*);
-}LinkList;
+typedef struct LList_ {
+    LLNode*   head;
+    size_t    length;
+    int       dataSize;
+    int       (*Add)           (struct LList_*, int, void*);
+    int       (*Push)          (struct LList_*, void*);
+    int       (*Pop)           (struct LList_*);
+    bool      (*Empty)         (struct LList_*);
+    void*     (*Find)          (struct LList_*, void*, bool(*)(void*, void*));
+    void      (*Traverse)      (struct LList_*, void(*)(void*));
+    void      (*Sort)          (struct LList_*, bool(*)(void*, void*));
+    int       (*Delete)        (struct LList_*, void*, bool(*)(void*, void*));
+    LLIterator* (*CreateIterator)(struct LList_*);
+}LList;
 
-LinkList* CreateLinkList(int);
-int Add(struct LinkList_*, int, void*);
-int Push(struct LinkList_*, void*);
-int Pop(struct LinkList_*);
-bool Empty(struct LinkList_*);
-void* Find(struct LinkList_*, void*, bool(*)(void*, void*));
-void Traverse(struct LinkList_*, void(*)(void*));
-void Sort(struct LinkList_*, bool(*)(void*, void*));
-int Delete(struct LinkList_*, void*, bool(*)(void*, void*));
-Iterator* CreateIterator(struct LinkList_*);
+LList*    LL_Create        (int);// link list create
+int       LL_Add           (struct LList_*, int, void*);
+int       LL_Push          (struct LList_*, void*);
+int       LL_Pop           (struct LList_*);
+bool      LL_Empty         (struct LList_*);
+void*     LL_Find          (struct LList_*, void*, bool(*)(void*, void*));
+void      LL_Traverse      (struct LList_*, void(*)(void*));
+void      LL_Sort          (struct LList_*, bool(*)(void*, void*));
+int       LL_Delete        (struct LList_*, void*, bool(*)(void*, void*));
+LLIterator* LL_CreateIterator(struct LList_*);
 
 #ifdef __cplusplus
 }

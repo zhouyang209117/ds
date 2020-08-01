@@ -14,7 +14,7 @@ Student* CreateStudent(int num, wchar_t* name) {
 }
 
 TEST(CreateStack, EqualsOne) {
-    LinkList* stack = CreateLinkList(sizeof(Student));
+    LList* stack = LL_Create(sizeof(Student));
     EXPECT_EQ(stack->length, 0);
     Student* stu = CreateStudent(1, L"张三");
     int result = stack->Push(stack, stu);

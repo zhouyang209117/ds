@@ -38,7 +38,7 @@ bool equal(void* a, void* b) {
     }
 }
 
-void processChar(LinkList* list, wchar_t w) {
+void processChar(LList* list, wchar_t w) {
     if (w < CN_START || w > CN_END) {
         return;
     }
@@ -99,7 +99,7 @@ int step1() {
 }
 
 void step2() {
-    LinkList* list = CreateLinkList(sizeof(Node));
+    LList* list = LL_Create(sizeof(Node));
     wchar_t wc;
     FILE* fin = fopen ("2.txt","r");
     while ((wc = fgetwc(fin)) != WEOF){
@@ -108,9 +108,9 @@ void step2() {
     fclose(fin);
     list->Sort(list, lt);
     FILE* fout = fopen ("3.txt","w");
-    Iterator *ite = list->CreateIterator(list);
-    while (ite->hasNext(ite)) {
-        Node* node = (Node*)(ite->next(ite));
+    LLIterator *ite = list->CreateIterator(list);
+    while (ite->HasNext(ite)) {
+        Node* node = (Node*)(ite->Next(ite));
         fwprintf(fout, L"%lc,%d\n", node->Char, node->num);
     }
     fclose(fout);

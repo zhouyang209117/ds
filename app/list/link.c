@@ -43,7 +43,7 @@ Student* CreateStudent(int num ,wchar_t* name) {
 
 int main() {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    LinkList* list = CreateLinkList(sizeof(Student));
+    LList* list = LL_Create(sizeof(Student));
     Student* stu1 = CreateStudent(100, L"张三1");
     Student* stu2 = CreateStudent(1, L"张三2");
     Student* stu3 = CreateStudent(90, L"张三3");
@@ -52,23 +52,21 @@ int main() {
     list->Add(list, 0, stu2);
     list->Add(list, 0, stu3);
     list->Add(list, 0, stu4);
-    list->Traverse(list, printStu);
     printf("find\n");
     Student* current = list->Find(list, stu2, equal);
     printStu(current);
     printf("sort\n");
     list->Sort(list, gt);
-    list->Traverse(list, printStu);
     printf("next:\n");
-    Iterator *ite = list->CreateIterator(list);
-    while (ite->hasNext(ite)) {
-        printStu(ite->next(ite));
+    LLIterator *ite = list->CreateIterator(list);
+    while (ite->HasNext(ite)) {
+        printStu(ite->Next(ite));
     }
     list->Delete(list, stu1, equal);
     printf("deleted:\n");
     ite = list->CreateIterator(list);
-    while (ite->hasNext(ite)) {
-        printStu(ite->next(ite));
+    while (ite->HasNext(ite)) {
+        printStu(ite->Next(ite));
     }
     return 0;
 }
