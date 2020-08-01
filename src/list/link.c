@@ -5,7 +5,17 @@
 #include <code/code.h>
 #include "list/link.h"
 
-void swap(void* a, void* b, int size) {
+static int         Add           (struct LList_*, int, void*);
+static int         Push          (struct LList_*, void*);
+static int         Pop           (struct LList_*);
+static bool        Empty         (struct LList_*);
+static void*       Find          (struct LList_*, void*, bool(*)(void*, void*));
+static void        Sort          (struct LList_*, bool(*)(void*, void*));
+static int         Delete        (struct LList_*, void*, bool(*)(void*, void*));
+static LLIterator* CreateIterator(struct LList_*);
+
+
+static void swap(void* a, void* b, int size) {
     char* tmp = (char*)malloc(size);
     memcpy(tmp, a, size);
     memcpy(a, b, size);
@@ -23,18 +33,18 @@ LList* LL_Create(int dataSize) {
     list->dataSize = dataSize;
     list->head = head;
     list->length = 0;
-    list->Add = LL_Add;
-    list->Push = LL_Push;
-    list->Pop = LL_Pop;
-    list->Empty = LL_Empty;
-    list->Find = LL_Find;
-    list->Sort = LL_Sort;
-    list->CreateIterator = LL_CreateIterator;
-    list->Delete = LL_Delete;
+    list->Add = Add;
+    list->Push = Push;
+    list->Pop = Pop;
+    list->Empty = Empty;
+    list->Find = Find;
+    list->Sort = Sort;
+    list->CreateIterator = CreateIterator;
+    list->Delete = Delete;
     return list;
 }
 
-int LL_Add(LList* self, int index, void* data) {
+static int Add(LList* self, int index, void* data) {
     if (index < 0 || index > self->length) {
         return 1;
     }
@@ -52,11 +62,11 @@ int LL_Add(LList* self, int index, void* data) {
     return 0;
 }
 
-int LL_Push(LList* self, void* data) {
-    return LL_Add(self, 0, data);
+static int Push(LList* self, void* data) {
+    return Add(self, 0, data);
 }
 
-int LL_Pop(LList* self) {
+static int Pop(LList* self) {
     if (self->head->next == NULL) {
         return ENOTFOUND;
     }
@@ -67,11 +77,11 @@ int LL_Pop(LList* self) {
     return 0;
 }
 
-bool LL_Empty(LList* self) {
+static bool Empty(LList* self) {
     return self->length == 0;
 }
 
-void* LL_Find(LList* self, void* data, bool(*equal)(void*, void*)) {
+static void* Find(LList* self, void* data, bool(*equal)(void*, void*)) {
     LLNode* tmp = self->head->next;
     while (tmp != NULL) {
         if (equal(tmp->ele, data)) {
@@ -82,7 +92,7 @@ void* LL_Find(LList* self, void* data, bool(*equal)(void*, void*)) {
     return NULL;
 }
 
-int LL_Delete(LList* self, void* data, bool(*eq)(void*, void*)) {
+static int Delete(LList* self, void* data, bool(*eq)(void*, void*)) {
     LLNode* current = self->head;
     while (current->next != NULL) {
         if (eq(current->next->ele, data)) {
@@ -97,17 +107,17 @@ int LL_Delete(LList* self, void* data, bool(*eq)(void*, void*)) {
     return ENOTFOUND;
 }
 
-void* Next(LLIterator* self) {
+static void* Next(LLIterator* self) {
     void* data = self->current->ele;
     self->current = self->current->next;
     return data;
 }
 
-bool HasNext(LLIterator* self) {
+static bool HasNext(LLIterator* self) {
     return self->current != NULL;
 }
 
-void LL_Sort(LList* self, bool(*gt)(void*, void*)) {
+static void Sort(LList* self, bool(*gt)(void*, void*)) {
     LLNode* first = self->head->next;
     for (int i = self->length - 1 ; i > 0; i--) {
         LLNode* p1 = first;
@@ -120,7 +130,7 @@ void LL_Sort(LList* self, bool(*gt)(void*, void*)) {
     }
 }
 
-LLIterator* LL_CreateIterator(LList* self) {
+static LLIterator* CreateIterator(LList* self) {
     LLIterator* ite = (LLIterator*)malloc(sizeof(LLIterator));
     ite->current = self->head->next;
     ite->Next = Next;
