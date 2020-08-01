@@ -10,6 +10,7 @@ cd ../..
 ./app/list/list_link.out
 ./app/list/list_clink.out
 ./app/list/simple_sq.out
+./app/tree/tree_bi.out
 ./tests/unittest_list.out
 ./tests/unittest_dclink_list.out
 ./tests/unittest_stack.out
