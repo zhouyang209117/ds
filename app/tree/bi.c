@@ -1,5 +1,6 @@
 #include <list/sq.h>
 #include <tree/bi.h>
+#include <list/link.h>
 #include <stdlib.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -24,7 +25,7 @@ bool empty(void* data) {
 void printStu(void* stu) {
     Student* tmp = (Student*)stu;
     if (tmp == NULL) {
-        printf("null pointer error\n");
+        printf("bi.c null pointer error\n");
         return;
     }
     printf("num=%d,name=%ls\n", tmp->num, tmp->name);
@@ -32,8 +33,8 @@ void printStu(void* stu) {
 
 void simpleTra(BiNode* t) {
     if (t != NULL) {
-        printStu(t->data);
         simpleTra(t->l);
+        printStu(t->data);
         simpleTra(t->r);
     }
 }
@@ -57,6 +58,14 @@ int main() {
     list->Add(list, list->length, CreateStudent(-1, L"#"));
     list->Add(list, list->length, CreateStudent(-1, L"#"));
     BiTree* tree = CreateBiTree(list, empty);
+    BITIterator* iterator = tree->CreateBITIterator(tree);
+    if (iterator == NULL) {
+        return 1;
+    }
+    while (iterator->HasNext(iterator)) {
+        Student* stu = (Student*)(iterator->Next(iterator));
+        printStu(stu);
+    }
     simpleTra(tree->head);
     return 0;
 }

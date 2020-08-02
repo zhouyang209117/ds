@@ -1,8 +1,12 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <list/link.h>
 #include <tree/bi.h>
 #include <list/sq.h>
+#include <stdio.h>
+
+static BITIterator* CreateBITIterator(BiTree*);
 
 void create(BiNode** t, Iterator* ite, bool(*empty)(void* data)) {
     void* current = ite->next(ite);
@@ -24,17 +28,48 @@ void create(BiNode** t, Iterator* ite, bool(*empty)(void* data)) {
     }
 }
 
-BiTree* CreateBiTree(SqList* list, bool(*empty)(void* data)) {
+BiTree* CreateBiTree(SqList* list, bool(*empty)(void*)) {
     BiTree* tree = (BiTree*)malloc(sizeof(BiTree));
     if (tree == NULL) {
         return NULL;
     }
-    Iterator* ite = CreateIterator(list);
+    Iterator* ite = list->CreateIterator(list);
     if (ite == NULL) {
         return NULL;
     }
     tree->head = NULL;
     create(&tree->head, ite, empty);
     tree->dataSize = list->dataSize;
+    tree->CreateBITIterator = CreateBITIterator;
     return tree;
+}
+
+static bool HasNext(BITIterator* ite) {
+    return ite->current != NULL || !ite->stack->Empty(ite->stack);
+}
+
+static void* Next(BITIterator* ite) {
+    BiNode* p = ite->current;
+    while(p != NULL) {
+        ite->stack->Push(ite->stack, &p);
+        p = p->l;
+    }
+    BiNode** q = ite->stack->Pop(ite->stack);
+    ite->current = (*q)->r;
+    return (*q)->data;
+}
+
+static BITIterator* CreateBITIterator(BiTree* tree) {
+    BITIterator* ite = (BITIterator*)malloc(sizeof(BITIterator));
+    if (ite == NULL) {
+        return NULL;
+    }
+    ite->current = tree->head;
+    ite->stack = LL_Create(sizeof(BiNode**));
+    if (ite->stack == NULL) {
+        return NULL;
+    }
+    ite->Next = Next;
+    ite->HasNext = HasNext;
+    return ite;
 }

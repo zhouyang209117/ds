@@ -7,7 +7,7 @@
 
 static int         Add           (struct LList_*, int, void*);
 static int         Push          (struct LList_*, void*);
-static int         Pop           (struct LList_*);
+static void*       Pop           (struct LList_*);
 static bool        Empty         (struct LList_*);
 static void*       Find          (struct LList_*, void*, bool(*)(void*, void*));
 static void        Sort          (struct LList_*, bool(*)(void*, void*));
@@ -66,15 +66,14 @@ static int Push(LList* self, void* data) {
     return Add(self, 0, data);
 }
 
-static int Pop(LList* self) {
+static void* Pop(LList* self) {
     if (self->head->next == NULL) {
-        return ENOTFOUND;
+        return NULL;
     }
     LLNode* tmp = self->head->next;
     self->head->next = self->head->next->next;
     self->length -= 1;
-    free(tmp);
-    return 0;
+    return tmp->ele;
 }
 
 static bool Empty(LList* self) {

@@ -18,11 +18,11 @@ typedef struct LLIterator_ { // link list iterator
 
 typedef struct LList_ {
     LLNode*     head;
-    size_t      length;
+    int      length;
     int         dataSize;
     int         (*Add)            (struct LList_*, int, void*);
     int         (*Push)           (struct LList_*, void*);
-    int         (*Pop)            (struct LList_*);
+    void*       (*Pop)            (struct LList_*);
     bool        (*Empty)          (struct LList_*);
     void*       (*Find)           (struct LList_*, void*, bool(*)(void*, void*));
     void        (*Traverse)       (struct LList_*, void(*)(void*));
