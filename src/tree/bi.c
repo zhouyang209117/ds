@@ -9,7 +9,7 @@
 static BITIterator* CreateBITIterator(BiTree*);
 
 void create(BiNode** t, Iterator* ite, bool(*empty)(void* data)) {
-    void* current = ite->next(ite);
+    void* current = ite->Next(ite);
     if (empty(current)) {
         *t = NULL;
     } else {

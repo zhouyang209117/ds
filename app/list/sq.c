@@ -58,29 +58,22 @@ int main() {
     }
     printf("next:\n");
     Iterator *ite = list->CreateIterator(list);
-    while (ite->hasNext(ite)) {
-        printStu(ite->next(ite));
+    while (ite->HasNext(ite)) {
+        printStu(ite->Next(ite));
     }
-    printf("%ls:\n", L"遍历结果");
-    list->Traverse(list, printStu);
     printf("%ls:\n", L"修改");
     Student stu3;
     stu3.num = 3;
     stu3.name = L"张三3";
     list->Set(list, 1, &stu3);
-    printf("%ls:\n", L"遍历结果");
-    list->Traverse(list, printStu);
     printf("%ls:\n", L"删除");
     int result = list->Remove(list, 0);
     if (result != 0) {
         printf("delete error\n");
     }
-    printf("%ls:\n", L"遍历结果");
-    list->Traverse(list, printStu);
     int index = list->Find(list, &stu3, equal);
     printf("%d\n", index);
     printf("sort:\n");
     list->Sort(list, gt);
-    list->Traverse(list, printStu);
     return 0;
 }

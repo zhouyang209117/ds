@@ -4,6 +4,14 @@
 #include <stdbool.h>
 #include <list/sq.h>
 
+static int       Add           (SqList*, int, void*);
+static void*     Get           (SqList*, int);
+static int       Set           (SqList*, int, void*);
+static int       Remove        (SqList*, int);
+static int       Find          (SqList*, void*, bool(*)(void*, void*));
+static void      Sort          (SqList*, bool(*)(void*, void*));
+static Iterator* CreateIterator(SqList*);
+
 SqList* CreateSqList(int eleSize) {
     SqList* sqList = (SqList*)malloc(sizeof(SqList));
     if (sqList == NULL) {
@@ -19,12 +27,11 @@ SqList* CreateSqList(int eleSize) {
     sqList->Remove = Remove;
     sqList->Find = Find;
     sqList->Sort = Sort;
-    sqList->Traverse = Traverse;
     sqList->CreateIterator = CreateIterator;
     return sqList;
 }
 
-int Add(SqList* self, int index, void* data) {
+static int Add(SqList* self, int index, void* data) {
     if (index < 0 || index > self->length) {
         return 1;
     }
@@ -43,14 +50,14 @@ int Add(SqList* self, int index, void* data) {
     return 0;
 }
 
-void* Get(SqList* self, int index) {
+static void* Get(SqList* self, int index) {
     if (index >= self->length) {
         return NULL;
     }
     return self->ele + index * self->dataSize;
 }
 
-int Set(SqList* self, int index, void* data) {
+static int Set(SqList* self, int index, void* data) {
     if (index >= self->length) {
         return 1;
     }
@@ -59,7 +66,7 @@ int Set(SqList* self, int index, void* data) {
     return 0;
 }
 
-int Remove(SqList* self, int index) {
+static int Remove(SqList* self, int index) {
     if (index < 0 || index >= self->length) {
         return 1;
     }
@@ -76,7 +83,7 @@ int Remove(SqList* self, int index) {
     return 0;
 }
 
-int Find(SqList* self, void* data, bool(*equal)(void*, void*)) {
+static int Find(SqList* self, void* data, bool(*equal)(void*, void*)) {
     for (int i = 0; i < self->length; i++) {
         char* current = self->ele + self->dataSize * i;
         if (equal(data, current)) {
@@ -86,21 +93,14 @@ int Find(SqList* self, void* data, bool(*equal)(void*, void*)) {
     return -1;
 }
 
-void Traverse(SqList* self, void(*traverse)(void*)) {
-    for (int i = 0; i < self->length; i++) {
-        char* current = self->ele + self->dataSize * i;
-        traverse((void*)current);
-    }
-}
-
-void swap(void* a, void* b, int size) {
+static void swap(void* a, void* b, int size) {
     char* tmp = (char*)malloc(size);
     memcpy(tmp, a, size);
     memcpy(a, b, size);
     memcpy(b, tmp, size);
 }
 
-void Sort(SqList* self, bool(*gt)(void*, void*)) {
+static void Sort(SqList* self, bool(*gt)(void*, void*)) {
     for (int i = self->length - 1; i > 0; i--) {
         for (int j = 0; j < i; j++) {
             if (gt(self->ele + j * self->dataSize, self->ele + (j + 1) * self->dataSize)) {
@@ -110,23 +110,26 @@ void Sort(SqList* self, bool(*gt)(void*, void*)) {
     }
 }
 
-void* Next(Iterator* self) {
+static void* Next(Iterator* self) {
     void* data = self->ele + (self->index * self->dataSize);
     self->index++;
     return data;
 }
 
-bool HasNext(Iterator* self) {
+static bool HasNext(Iterator* self) {
     return self->index <= self->length - 1;
 }
 
 Iterator* CreateIterator(SqList* self) {
     Iterator* ite = (Iterator*)malloc(sizeof(Iterator));
+    if (ite == NULL) {
+        return NULL;
+    }
     ite->length = self->length;
     ite->dataSize = self->dataSize;
     ite->index = 0;
     ite->ele = self->ele;
-    ite->hasNext = HasNext;
-    ite->next = Next;
+    ite->HasNext = HasNext;
+    ite->Next = Next;
     return ite;
 }

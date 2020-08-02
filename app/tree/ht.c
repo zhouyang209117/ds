@@ -53,8 +53,8 @@ int main() {
     SqList* input = getInput();
     SqList* htEle = CreateSqList(sizeof(HTNode));
     Iterator* ite = input->CreateIterator(input);
-    while (ite->hasNext(ite)) {
-        Node* current = (Node*)(ite->next(ite));
+    while (ite->HasNext(ite)) {
+        Node* current = (Node*)(ite->Next(ite));
         htEle->Add(htEle, 0, createHTNode(current->num));
     }
     for (int i = input->length; i < 2 * input->length - 1; i++) {
