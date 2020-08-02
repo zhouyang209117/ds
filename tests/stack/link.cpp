@@ -50,7 +50,6 @@ TEST(CreateStackBiNode, EqualsOne) {
     EXPECT_EQ(stack->length, 0);
     BiNode* node = (BiNode*)malloc(sizeof(BiNode));
     Student* stu = CreateStudent(10, L"张三");
-    printStu(stu);
     node->data = stu;
     node->l = NULL;
     node->r = NULL;
