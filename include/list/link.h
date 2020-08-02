@@ -18,7 +18,7 @@ typedef struct LLIterator_ { // link list iterator
 
 typedef struct LList_ {
     LLNode*     head;
-    int      length;
+    int         length;
     int         dataSize;
     int         (*Add)            (struct LList_*, int, void*);
     int         (*Push)           (struct LList_*, void*);
@@ -31,7 +31,7 @@ typedef struct LList_ {
     LLIterator* (*CreateIterator) (struct LList_*);
 }LList;
 
-LList*      LL_Create        (int);// link list create
+LList*      CreateLList        (int);//create link list
 #ifdef __cplusplus
 }
 #endif

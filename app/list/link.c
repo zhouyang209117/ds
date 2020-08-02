@@ -43,7 +43,7 @@ Student* CreateStudent(int num ,wchar_t* name) {
 
 int main() {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    LList* list = LL_Create(sizeof(Student));
+    LList* list = CreateLList(sizeof(Student));
     Student* stu1 = CreateStudent(100, L"张三1");
     Student* stu2 = CreateStudent(1, L"张三2");
     Student* stu3 = CreateStudent(90, L"张三3");

@@ -65,7 +65,7 @@ static BITIterator* CreateBITIterator(BiTree* tree) {
         return NULL;
     }
     ite->current = tree->head;
-    ite->stack = LL_Create(sizeof(BiNode**));
+    ite->stack = CreateLList(sizeof(BiNode**));
     if (ite->stack == NULL) {
         return NULL;
     }

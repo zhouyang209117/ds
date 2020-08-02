@@ -99,7 +99,7 @@ int step1() {
 }
 
 void step2() {
-    LList* list = LL_Create(sizeof(Node));
+    LList* list = CreateLList(sizeof(Node));
     wchar_t wc;
     FILE* fin = fopen ("2.txt","r");
     while ((wc = fgetwc(fin)) != WEOF){

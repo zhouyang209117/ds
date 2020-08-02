@@ -22,8 +22,11 @@ static void swap(void* a, void* b, int size) {
     memcpy(b, tmp, size);
 }
 
-LList* LL_Create(int dataSize) {
+LList* CreateLList(int dataSize) {
     LLNode* head = (LLNode*)malloc(sizeof(LLNode));
+    if (head == NULL) {
+        return NULL;
+    }
     head->ele = NULL;
     head->next = NULL;
     LList* list = (LList*)malloc(sizeof(LList));
