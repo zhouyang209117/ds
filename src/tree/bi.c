@@ -4,7 +4,6 @@
 #include <list/link.h>
 #include <tree/bi.h>
 #include <list/sq.h>
-#include <stdio.h>
 
 static BITIterator* CreateBITIterator(BiTree*);
 
