@@ -43,7 +43,7 @@ Student* CreateStudent(int num ,wchar_t* name) {
 
 int main() {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    LinkList* list = CreateLinkList(sizeof(Student));
+    CLList* list = CreateCLList(sizeof(Student));
     Student* stu1 = CreateStudent(100, L"张三1");
     Student* stu2 = CreateStudent(1, L"张三2");
     Student* stu3 = CreateStudent(90, L"张三3");
@@ -52,9 +52,9 @@ int main() {
     list->Add(list, 0, stu2);
     list->Add(list, 0, stu3);
     list->Add(list, 0, stu4);
-    Iterator *ite = CreateIterator(list);
-    while (ite->hasNext(ite)) {
-        printStu(ite->next(ite));
+    CLLIterator *ite = list->CreateIterator(list);
+    while (ite->HasNext(ite)) {
+        printStu(ite->Next(ite));
     }
     Student* tmp = CreateStudent(100, L"a");
     int deleteResult = list->Delete(list, tmp, equal);
@@ -63,9 +63,9 @@ int main() {
     } else {
         printf("delete error\n");
     }
-    ite = CreateIterator(list);
-    while (ite->hasNext(ite)) {
-        printStu(ite->next(ite));
+    ite = list->CreateIterator(list);
+    while (ite->HasNext(ite)) {
+        printStu(ite->Next(ite));
     }
     return 0;
 }

@@ -5,17 +5,21 @@
 #include "list/clink.h"
 #include "code/code.h"
 
-LinkList* CreateLinkList(int dataSize) {
+static int Add(CLList*, int, void*);
+static int Delete(CLList*, void*, bool(*eq)(void*, void*));
+static CLLIterator* CreateIterator(CLList*);
+
+CLList* CreateCLList(int dataSize) {
     if (dataSize == 0) {
         return NULL;
     }
-    LinkNode* head = (LinkNode*)malloc(sizeof(LinkNode));
+    CLLNode* head = (CLLNode*)malloc(sizeof(CLLNode));
     if (head == NULL) {
         return ENOMEM;
     }
     head->ele = NULL;
     head->next = head;
-    LinkList* list = (LinkList*)malloc(sizeof(LinkList));
+    CLList* list = (CLList*)malloc(sizeof(CLList));
     if (list == NULL) {
         return ENOMEM;
     }
@@ -24,15 +28,19 @@ LinkList* CreateLinkList(int dataSize) {
     list->length = 0;
     list->Add = Add;
     list->Delete = Delete;
+    list->CreateIterator = CreateIterator;
     return list;
 }
 
-int add(LinkList* self, int index, void* data) {
-    LinkNode* tmp = self->head;
+static int Add(CLList* self, int index, void* data) {
+    if (index < 0 || index > self->length) {
+        return EAGAIN;
+    }
+    CLLNode* tmp = self->head;
     for (int i = index; i > 0; i--) {
         tmp = tmp->next;
     }
-    LinkNode* newNode = (LinkNode*)malloc(sizeof(LinkNode));
+    CLLNode* newNode = (CLLNode*)malloc(sizeof(CLLNode));
     if (newNode == NULL) {
         return ENOMEM;
     }
@@ -45,50 +53,39 @@ int add(LinkList* self, int index, void* data) {
     newNode->next = tmp->next;
     tmp->next = newNode;
     self->length += 1;
-}
-
-int Add(LinkList* self, int index, void* data) {
-    if (index < 0 || index > self->length) {
-        return EAGAIN;
-    }
-    if (self->length == 0) {
-        add(self, 0, data);
-    } else {
-        add(self, index % self->length, data);
-    }
     return 0;
 }
 
-void* Next(Iterator* self) {
+static void* Next(CLLIterator* self) {
     void* data = self->current->ele;
     self->current = self->current->next;
     return data;
 }
 
-bool HasNext(Iterator* self) {
+static bool HasNext(CLLIterator* self) {
     return self->current != self->head;
 }
 
-Iterator* CreateIterator(LinkList* self) {
-    Iterator* ite = (Iterator*)malloc(sizeof(Iterator));
+static CLLIterator* CreateIterator(CLList* self) {
+    CLLIterator* ite = (CLLIterator*)malloc(sizeof(CLLIterator));
     if (ite == NULL) {
         return NULL;
     }
     ite->head = self->head;
     ite->current = self->head->next;
-    ite->next = Next;
-    ite->hasNext = HasNext;
+    ite->Next = Next;
+    ite->HasNext = HasNext;
     return ite;
 }
 
-int Delete(LinkList* self, void* data, bool(*eq)(void*, void*)) {
+static int Delete(CLList* self, void* data, bool(*eq)(void*, void*)) {
     if (self == NULL) {
         return EAGAIN;
     }
-    LinkNode* current = self->head;
+    CLLNode* current = self->head;
     while (current->next != self->head) {
         if (eq(current->next->ele, data)) {
-            LinkNode* tmp = current->next;
+            CLLNode* tmp = current->next;
             current->next = current->next->next;
             self->length -= 1;
             free(tmp);

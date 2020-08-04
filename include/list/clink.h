@@ -1,29 +1,33 @@
 #ifndef DS_LIST_CLINK_H
 #define DS_LIST_CLINK_H
+#include <stdbool.h>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-typedef struct LinkNode {
+typedef struct CLLNode_ { // circular linked list node
     void* ele;
-    struct LinkNode* next;
-}LinkNode;
+    struct CLLNode_* next;
+}CLLNode;
 
-typedef struct Iterator_ {
-    LinkNode* current;
-    LinkNode* head;
-    bool (*hasNext)(struct Iterator_*);
-    void* (*next)(struct Iterator_*);
-} Iterator;
+typedef struct CLLIterator_ {
+    CLLNode* current;
+    CLLNode* head;
+    bool     (*HasNext)(struct CLLIterator_*);
+    void*    (*Next)   (struct CLLIterator_*);
+} CLLIterator;
 
-typedef struct LinkList_ {
-    LinkNode *head;
-    size_t length;
-    int dataSize;
-    int (*Add)(struct LinkList_*, int, void*);
-    int (*Delete)(struct LinkList_*, void*, bool(*eq)(void*, void*));
-    Iterator* (*CreateIterator)(struct LinkList_*);
-}LinkList;
+typedef struct CLList_ {
+    CLLNode      *head;
+    int          length;
+    int          dataSize;
+    int          (*Add)           (struct CLList_*, int, void*);
+    int          (*Delete)        (struct CLList_*, void*, bool(*eq)(void*, void*));
+    CLLIterator* (*CreateIterator)(struct CLList_*);
+}CLList;
 
-LinkList* CreateLinkList(int);
-int Add(LinkList*, int, void*);
-int Delete(struct LinkList_*, void*, bool(*eq)(void*, void*));
-Iterator* CreateIterator(struct LinkList_*);
+CLList* CreateCLList(int);
+#ifdef __cplusplus
+}
+#endif
 #endif

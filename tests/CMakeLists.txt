@@ -6,6 +6,13 @@ target_link_libraries(unittest_list.out
         PUBLIC list_sq
         PUBLIC ${PROJECT_LINK_LIBS})
 
+add_executable(unittest_clink_list.out
+        list/clink.cpp
+        main.cpp)
+target_link_libraries(unittest_clink_list.out
+        PUBLIC list_clink
+        PUBLIC ${PROJECT_LINK_LIBS})
+
 add_executable(unittest_dclink_list.out
         list/dclink.cpp
         main.cpp)
