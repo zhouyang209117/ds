@@ -1,5 +1,5 @@
-#ifndef SQ_LIST_H
-#define SQ_LIST_H
+#ifndef DS_LIST_SQ_H
+#define DS_LIST_SQ_H
 #include <stdbool.h>
 #ifdef __cplusplus
 extern "C" {

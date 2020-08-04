@@ -1,5 +1,5 @@
-#ifndef C_LINK_LIST_H
-#define C_LINK_LIST_H
+#ifndef DS_LIST_CLINK_H
+#define DS_LIST_CLINK_H
 
 typedef struct LinkNode {
     void* ele;

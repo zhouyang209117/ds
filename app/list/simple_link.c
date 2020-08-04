@@ -7,8 +7,7 @@ typedef struct Node_ {
     struct Node_* next;
 }Node;
 
-Node* CreateList() {
-    Node* list = (Node*)malloc(sizeof(Node));
+Node* Init(Node* list) {
     list->next = NULL;
     return list;
 }
@@ -31,13 +30,14 @@ int Add(Node* head, int index, int data) {
 }
 
 int main() {
-    Node* list = CreateList();
-    Add(list, 0, 1);
-    Add(list, 0, 2);
-    Add(list, 0, 3);
-    Add(list, 2, 4);
-    Add(list, 100, 5);
-    Node* tmp = list->next;
+    Node head;
+    Init(&head);
+    Add(&head, 0, 1);
+    Add(&head, 0, 2);
+    Add(&head, 0, 3);
+    Add(&head, 2, 4);
+    Add(&head, 100, 5);
+    Node* tmp = head.next;
     while (tmp != NULL) {
         printf("%d\n", *tmp->data);
         tmp = tmp->next;
