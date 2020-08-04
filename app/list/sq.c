@@ -4,7 +4,8 @@
 #include <locale.h>
 #include <string.h>
 #include <stdbool.h>
-#include "list/sq.h"
+#include <interface/comparator.h>
+#include <list/sq.h>
 typedef struct Student_ {
     int num;
     wchar_t* name;
@@ -47,9 +48,20 @@ Student* CreateStudent(int num, wchar_t* name) {
     return stu;
 }
 
+Comparator* CreateComparator() {
+    Comparator* cmp = (Comparator*)malloc(sizeof(Comparator));
+    if (cmp == NULL) {
+        return NULL;
+    }
+    cmp->CompareTo = gt;
+    cmp->Equal = equal;
+    return cmp;
+}
+
 int main() {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    SqList* list = CreateSqList(sizeof(Student));
+    Comparator* cmp = CreateComparator();
+    SqList* list = CreateSqList(sizeof(Student), cmp);
     for (int i = 0; i < 20; i++) {
         wchar_t* name = (wchar_t*)malloc(sizeof(wchar_t) * 10);
         swprintf(name, 10, L"%s%d", "张三", i);
@@ -71,9 +83,9 @@ int main() {
     if (result != 0) {
         printf("delete error\n");
     }
-    int index = list->Find(list, &stu3, equal);
+    int index = list->Find(list, &stu3);
     printf("%d\n", index);
     printf("sort:\n");
-    list->Sort(list, gt);
+    list->Sort(list);
     return 0;
 }

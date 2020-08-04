@@ -2,17 +2,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
+#include <interface/comparator.h>
 #include <list/sq.h>
 
 static int       Add           (SqList*, int, void*);
 static void*     Get           (SqList*, int);
 static int       Set           (SqList*, int, void*);
 static int       Remove        (SqList*, int);
-static int       Find          (SqList*, void*, bool(*)(void*, void*));
-static void      Sort          (SqList*, bool(*)(void*, void*));
+static int       Find          (SqList*, void*);
+static void      Sort          (SqList*);
 static Iterator* CreateIterator(SqList*);
 
-SqList* CreateSqList(int eleSize) {
+SqList* CreateSqList(int eleSize, Comparator* comparator) {
     SqList* sqList = (SqList*)malloc(sizeof(SqList));
     if (sqList == NULL) {
         return NULL;
@@ -21,6 +22,7 @@ SqList* CreateSqList(int eleSize) {
     sqList->ele = (char*)malloc(eleSize * SE_LIST_INIT_SIZE);
     sqList->length = 0;
     sqList->dataSize = eleSize;
+    sqList->comparator = comparator;
     sqList->Add = Add;
     sqList->Get = Get;
     sqList->Set = Set;
@@ -83,10 +85,11 @@ static int Remove(SqList* self, int index) {
     return 0;
 }
 
-static int Find(SqList* self, void* data, bool(*equal)(void*, void*)) {
+static int Find(SqList* self, void* data) {
     for (int i = 0; i < self->length; i++) {
         char* current = self->ele + self->dataSize * i;
-        if (equal(data, current)) {
+        printf("%p\n", self->comparator);
+        if (self->comparator->Equal(data, current)) {
             return i;
         }
     }
@@ -100,11 +103,13 @@ static void swap(void* a, void* b, int size) {
     memcpy(b, tmp, size);
 }
 
-static void Sort(SqList* self, bool(*gt)(void*, void*)) {
+static void Sort(SqList* self) {
     for (int i = self->length - 1; i > 0; i--) {
         for (int j = 0; j < i; j++) {
-            if (gt(self->ele + j * self->dataSize, self->ele + (j + 1) * self->dataSize)) {
-                swap(self->ele + j * self->dataSize, self->ele + (j + 1) * self->dataSize, self->dataSize);
+            if (self->comparator->CompareTo(self->ele + j * self->dataSize,
+                                            self->ele + (j + 1) * self->dataSize)) {
+                swap(self->ele + j * self->dataSize,
+                     self->ele + (j + 1) * self->dataSize, self->dataSize);
             }
         }
     }

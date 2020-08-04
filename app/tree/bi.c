@@ -41,7 +41,7 @@ void simpleTra(BiNode* t) {
 
 int main() {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    SqList* list = CreateSqList(sizeof(Student));
+    SqList* list = CreateSqList(sizeof(Student), NULL);
     list->Add(list, list->length, CreateStudent(0, L"A"));
     list->Add(list, list->length, CreateStudent(0, L"B"));
     list->Add(list, list->length, CreateStudent(0, L"C"));

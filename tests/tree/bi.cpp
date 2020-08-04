@@ -24,7 +24,7 @@ TEST(BiTree, EqualsOne) {
     Student* stu1 = CreateStudent(0, L"张三1");
     Student* stu2 = CreateStudent(-1, L"张三1");
     Student* stu3 = CreateStudent(-1, L"张三1");
-    SqList* list = CreateSqList(sizeof(Student));
+    SqList* list = CreateSqList(sizeof(Student), NULL);
     int result1 = list->Add(list, list->length, stu1);
     int result2 = list->Add(list, list->length, stu2);
     int result3 = list->Add(list, list->length, stu3);

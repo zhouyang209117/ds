@@ -36,7 +36,7 @@ HTNode* createHTNode(int weight) {
 }
 
 SqList* getInput() {
-    SqList* list = CreateSqList(sizeof(Node));
+    SqList* list = CreateSqList(sizeof(Node), NULL);
     list->Add(list, list->length, createNode(1, L'中'));
     list->Add(list, list->length, createNode(2, L'国'));
     list->Add(list, list->length, createNode(3, L'人'));
@@ -49,9 +49,9 @@ void update(SqList* htEle) {
 
 int main() {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    SqList* list = CreateSqList(sizeof(Node));
+    SqList* list = CreateSqList(sizeof(Node), NULL);
     SqList* input = getInput();
-    SqList* htEle = CreateSqList(sizeof(HTNode));
+    SqList* htEle = CreateSqList(sizeof(HTNode), NULL);
     Iterator* ite = input->CreateIterator(input);
     while (ite->HasNext(ite)) {
         Node* current = (Node*)(ite->Next(ite));
