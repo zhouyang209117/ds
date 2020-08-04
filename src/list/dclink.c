@@ -5,6 +5,9 @@
 #include <code/code.h>
 #include "list/dclink.h"
 
+static int Add(DCLList*, int, void*);
+static DCLLIterator* CreateDCLLIterator(DCLList*);
+
 DCLList* CreateDCLList(int dataSize) {
     DCLNode* head = (DCLNode*)malloc(sizeof(DCLNode));
     if (head == NULL) {
@@ -25,7 +28,10 @@ DCLList* CreateDCLList(int dataSize) {
     return list;
 }
 
-int add(DCLList* self, int index, void* data) {
+static int Add(DCLList* self, int index, void* data) {
+    if (index < 0 || index > self->length) {
+        return EAGAIN;
+    }
     DCLNode* tmp = self->head;
     for (int i = index; i > 0; i--) {
         tmp = tmp->next;
@@ -45,31 +51,20 @@ int add(DCLList* self, int index, void* data) {
     newNode->pre = tmp;
     tmp->next = newNode;
     self->length += 1;
-}
-
-int Add(DCLList* self, int index, void* data) {
-    if (index < 0 || index > self->length) {
-        return EAGAIN;
-    }
-    if (self->length == 0) {
-        add(self, 0, data);
-    } else {
-        add(self, index % self->length, data);
-    }
     return 0;
 }
 
-void* Next(DCLLIterator* self) {
+static void* Next(DCLLIterator* self) {
     void* data = self->current->ele;
     self->current = self->current->next;
     return data;
 }
 
-bool HasNext(DCLLIterator* self) {
+static bool HasNext(DCLLIterator* self) {
     return self->current != self->head;
 }
 
-DCLLIterator* CreateDCLLIterator(DCLList* list) {
+static DCLLIterator* CreateDCLLIterator(DCLList* list) {
     DCLLIterator* ite = (DCLLIterator*)malloc(sizeof(DCLLIterator));
     if (ite == NULL) {
         return NULL;

@@ -14,21 +14,19 @@ typedef struct DCLNode_ { // double circular link Node
 typedef struct DCLLIterator_ {
     DCLNode* current;
     DCLNode* head;
-    bool (*HasNext)(struct DCLLIterator_*);
-    void* (*Next)(struct DCLLIterator_*);
+    bool     (*HasNext)(struct DCLLIterator_*);
+    void*    (*Next)   (struct DCLLIterator_*);
 } DCLLIterator; // double circular link list iterator
 
 typedef struct DCLList_ { //double circular link list
-    DCLNode *head;
-    size_t length;
-    int dataSize;
-    int (*Add)(struct DCLList_*, int, void*);
+    DCLNode*      head;
+    size_t        length;
+    int           dataSize;
+    int           (*Add)           (struct DCLList_*, int, void*);
     DCLLIterator* (*CreateIterator)(struct DCLList_*);
 }DCLList;
 
 DCLList* CreateDCLList(int);
-int Add(DCLList*, int, void*);
-DCLLIterator* CreateDCLLIterator(DCLList*);
 #ifdef __cplusplus
 }
 #endif
