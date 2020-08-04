@@ -88,7 +88,6 @@ static int Remove(SqList* self, int index) {
 static int Find(SqList* self, void* data) {
     for (int i = 0; i < self->length; i++) {
         char* current = self->ele + self->dataSize * i;
-        printf("%p\n", self->comparator);
         if (self->comparator->Equal(data, current)) {
             return i;
         }
