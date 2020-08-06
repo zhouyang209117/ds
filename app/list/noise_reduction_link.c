@@ -44,8 +44,8 @@ void processChar(LList* list, wchar_t w) {
     }
     Node newNode;
     newNode.Char = w;
-    Node* existNode = list->Find(list, &newNode);
-    if (existNode == NULL) {
+    int index = list->Find(list, &newNode);
+    if (index == -1) {
         newNode.num = 1;
         int result = list->Add(list, 0, &newNode);
         if (result != 0) {
@@ -53,7 +53,8 @@ void processChar(LList* list, wchar_t w) {
             return;
         }
     } else {
-        existNode->num += 1;
+        Node* current = (Node*)(list->Get(list, index));
+        current->num += 1;
     }
 }
 

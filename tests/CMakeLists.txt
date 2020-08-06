@@ -20,6 +20,13 @@ target_link_libraries(unittest_dclink_list.out
         PUBLIC list_dclink
         PUBLIC ${PROJECT_LINK_LIBS})
 
+add_executable(unittest_link_list.out
+        list/link.cpp
+        main.cpp)
+target_link_libraries(unittest_link_list.out
+        PUBLIC list_link
+        PUBLIC ${PROJECT_LINK_LIBS})
+
 add_executable(unittest_stack.out
         stack/link.cpp
         main.cpp)

@@ -25,7 +25,8 @@ typedef struct LList_ {
     int         (*Push)           (struct LList_*, void*);
     void*       (*Pop)            (struct LList_*);
     bool        (*Empty)          (struct LList_*);
-    void*       (*Find)           (struct LList_*, void*);
+    int         (*Find)           (struct LList_*, void*);
+    void*       (*Get)            (struct LList_*, int);
     void        (*Sort)           (struct LList_*);
     int         (*Delete)         (struct LList_*, void*);
     LLIterator* (*CreateIterator) (struct LList_*);

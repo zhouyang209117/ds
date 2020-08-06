@@ -3,13 +3,14 @@
 #include <string.h>
 #include <stdbool.h>
 #include <code/code.h>
-#include "list/link.h"
+#include <list/link.h>
 
 static int         Add           (struct LList_*, int, void*);
 static int         Push          (struct LList_*, void*);
 static void*       Pop           (struct LList_*);
 static bool        Empty         (struct LList_*);
-static void*       Find          (struct LList_*, void*);
+static int         Find          (struct LList_*, void*);
+static void*       Get           (struct LList_*, int);
 static void        Sort          (struct LList_*);
 static int         Delete        (struct LList_*, void*);
 static LLIterator* CreateIterator(struct LList_*);
@@ -42,6 +43,7 @@ LList* CreateLList(int dataSize, Comparator* comparator) {
     list->Pop = Pop;
     list->Empty = Empty;
     list->Find = Find;
+    list->Get = Get;
     list->Sort = Sort;
     list->CreateIterator = CreateIterator;
     list->Delete = Delete;
@@ -84,15 +86,21 @@ static bool Empty(LList* self) {
     return self->length == 0;
 }
 
-static void* Find(LList* self, void* data) {
+static int Find(LList* self, void* data) {
     LLNode* tmp = self->head->next;
-    while (tmp != NULL) {
+    for (int i = 0; tmp; i++, tmp = tmp->next) {
         if (self->comparator->Equal(tmp->ele, data)) {
-            return tmp->ele;
+            return i;
         }
-        tmp = tmp->next;
     }
-    return NULL;
+    return -1;
+}
+
+static void* Get(LList* self, int index) {
+    LLNode* tmp = self->head->next;
+    for (int i = 0; i < index && tmp; i++, tmp = tmp->next) {
+    }
+    return tmp ? tmp->ele : NULL;
 }
 
 static int Delete(LList* self, void* data) {

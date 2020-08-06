@@ -63,9 +63,8 @@ int main() {
     list->Add(list, 0, stu2);
     list->Add(list, 0, stu3);
     list->Add(list, 0, stu4);
-    printf("find\n");
-    Student* current = list->Find(list, stu2);
-    printStu(current);
+    int result = list->Find(list, stu2);
+    printf("find index=%d\n", result);
     printf("sort\n");
     list->Sort(list);
     printf("next:\n");
