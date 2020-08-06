@@ -22,8 +22,6 @@ typedef struct LList_ {
     int         length;
     int         dataSize;
     int         (*Add)            (struct LList_*, int, void*);
-    int         (*Push)           (struct LList_*, void*);
-    void*       (*Pop)            (struct LList_*);
     bool        (*Empty)          (struct LList_*);
     int         (*Find)           (struct LList_*, void*);
     void*       (*Get)            (struct LList_*, int);

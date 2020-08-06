@@ -1,0 +1,1 @@
+add_library(link_stack link.c)

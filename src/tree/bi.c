@@ -1,7 +1,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
-#include <list/link.h>
+#include <stack/link.h>
 #include <tree/bi.h>
 #include <list/sq.h>
 
@@ -64,7 +64,7 @@ static BITIterator* CreateBITIterator(BiTree* tree) {
         return NULL;
     }
     ite->current = tree->head;
-    ite->stack = CreateLList(sizeof(BiNode**), NULL);
+    ite->stack = CreateLStack(sizeof(BiNode**));
     if (ite->stack == NULL) {
         return NULL;
     }

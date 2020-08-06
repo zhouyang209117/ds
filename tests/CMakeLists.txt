@@ -31,7 +31,7 @@ add_executable(unittest_stack.out
         stack/link.cpp
         main.cpp)
 target_link_libraries(unittest_stack.out
-        PUBLIC list_link
+        PUBLIC link_stack
         PUBLIC tree_bi
         PUBLIC ${PROJECT_LINK_LIBS})
 
@@ -40,6 +40,6 @@ add_executable(unittest_tree_bi.out
         main.cpp)
 target_link_libraries(unittest_tree_bi.out
         PUBLIC list_sq
-        PUBLIC list_link
+        PUBLIC link_stack
         PUBLIC tree_bi
         PUBLIC ${PROJECT_LINK_LIBS})

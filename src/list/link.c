@@ -6,15 +6,12 @@
 #include <list/link.h>
 
 static int         Add           (struct LList_*, int, void*);
-static int         Push          (struct LList_*, void*);
-static void*       Pop           (struct LList_*);
 static bool        Empty         (struct LList_*);
 static int         Find          (struct LList_*, void*);
 static void*       Get           (struct LList_*, int);
 static void        Sort          (struct LList_*);
 static int         Delete        (struct LList_*, void*);
 static LLIterator* CreateIterator(struct LList_*);
-
 
 static void swap(void* a, void* b, int size) {
     char* tmp = (char*)malloc(size);
@@ -39,8 +36,6 @@ LList* CreateLList(int dataSize, Comparator* comparator) {
     list->head = head;
     list->length = 0;
     list->Add = Add;
-    list->Push = Push;
-    list->Pop = Pop;
     list->Empty = Empty;
     list->Find = Find;
     list->Get = Get;
@@ -66,20 +61,6 @@ static int Add(LList* self, int index, void* data) {
     tmp->next = newNode;
     self->length += 1;
     return 0;
-}
-
-static int Push(LList* self, void* data) {
-    return Add(self, 0, data);
-}
-
-static void* Pop(LList* self) {
-    if (self->head->next == NULL) {
-        return NULL;
-    }
-    LLNode* tmp = self->head->next;
-    self->head->next = self->head->next->next;
-    self->length -= 1;
-    return tmp->ele;
 }
 
 static bool Empty(LList* self) {

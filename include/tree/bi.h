@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 #include <list/sq.h>
-#include <list/link.h>
+#include <stack/link.h>
 typedef struct BiNode_ {
     struct BiNode_* l;
     struct BiNode_* r;
@@ -13,7 +13,7 @@ typedef struct BiNode_ {
 }BiNode;
 
 typedef struct BITIterator_ { // binary tree iterator
-    LList* stack;
+    LStack* stack;
     BiNode* current;
     bool   (*HasNext)(struct BITIterator_*);
     void*  (*Next)   (struct BITIterator_*);

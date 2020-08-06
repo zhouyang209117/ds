@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 #include <list/link.h>
 #include <tree/bi.h>
+#include <stack/link.h>
 
 typedef struct Student_ {
     int num;
@@ -14,20 +15,18 @@ Student* CreateStudent(int num, wchar_t* name) {
 
 TEST(CreateStackStu, EqualsOne) {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    LList* stack = CreateLList(sizeof(Student), NULL);
-    EXPECT_EQ(stack->length, 0);
+    LStack* stack = CreateLStack(sizeof(Student));
     Student* stu = CreateStudent(1, L"张三");
     int result = stack->Push(stack, stu);
     EXPECT_EQ(result, 0);
     Student* stu1 = (Student*)stack->Pop(stack);
     EXPECT_EQ(stu1 != NULL, true);
-    EXPECT_EQ(true, stack->Empty(stack));
+    EXPECT_EQ(1, stack->Empty(stack));
 }
 
 TEST(CreateStackIntPointer, EqualsOne) {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    LList* stack = CreateLList(sizeof(int*), NULL);
-    EXPECT_EQ(stack->length, 0);
+    LStack* stack = CreateLStack(sizeof(int*));
     int a = 1;
     int result = stack->Push(stack, &a);
     EXPECT_EQ(result, 0);
@@ -46,8 +45,7 @@ void printStu(void* stu) {
 
 TEST(CreateStackBiNode, EqualsOne) {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    LList* stack = CreateLList(sizeof(BiNode**), NULL);
-    EXPECT_EQ(stack->length, 0);
+    LStack* stack = CreateLStack(sizeof(BiNode**));
     BiNode* node = (BiNode*)malloc(sizeof(BiNode));
     Student* stu = CreateStudent(10, L"张三");
     node->data = stu;
