@@ -36,7 +36,6 @@ LList* CreateLList(int dataSize, Comparator* comparator) {
     list->head = head;
     list->length = 0;
     list->Add = Add;
-    list->Empty = Empty;
     list->Find = Find;
     list->Get = Get;
     list->Sort = Sort;
@@ -61,10 +60,6 @@ static int Add(LList* self, int index, void* data) {
     tmp->next = newNode;
     self->length += 1;
     return 0;
-}
-
-static bool Empty(LList* self) {
-    return self->length == 0;
 }
 
 static int Find(LList* self, void* data) {

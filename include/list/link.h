@@ -22,7 +22,6 @@ typedef struct LList_ {
     int         length;
     int         dataSize;
     int         (*Add)            (struct LList_*, int, void*);
-    bool        (*Empty)          (struct LList_*);
     int         (*Find)           (struct LList_*, void*);
     void*       (*Get)            (struct LList_*, int);
     void        (*Sort)           (struct LList_*);
