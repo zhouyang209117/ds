@@ -44,7 +44,7 @@ void processChar(LList* list, wchar_t w) {
     }
     Node newNode;
     newNode.Char = w;
-    Node* existNode = list->Find(list, &newNode, equal);
+    Node* existNode = list->Find(list, &newNode);
     if (existNode == NULL) {
         newNode.num = 1;
         int result = list->Add(list, 0, &newNode);
@@ -98,15 +98,26 @@ int step1() {
     return 0;
 }
 
+Comparator* CreateComparator() {
+    Comparator* cmp = (Comparator*)malloc(sizeof(Comparator));
+    if (cmp == NULL) {
+        return NULL;
+    }
+    cmp->CompareTo = lt;
+    cmp->Equal = equal;
+    return cmp;
+}
+
 void step2() {
-    LList* list = CreateLList(sizeof(Node));
+    Comparator* cmp = CreateComparator();
+    LList* list = CreateLList(sizeof(Node), cmp);
     wchar_t wc;
     FILE* fin = fopen ("2.txt","r");
     while ((wc = fgetwc(fin)) != WEOF){
         processChar(list, wc);
     }
     fclose(fin);
-    list->Sort(list, lt);
+    list->Sort(list);
     FILE* fout = fopen ("3.txt","w");
     LLIterator *ite = list->CreateIterator(list);
     while (ite->HasNext(ite)) {

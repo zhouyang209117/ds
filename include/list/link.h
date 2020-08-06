@@ -4,7 +4,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+#include <interface/comparator.h>
 typedef struct LLNode_ { // link list node
     void* ele;
     struct LLNode_* next;
@@ -17,6 +17,7 @@ typedef struct LLIterator_ { // link list iterator
 } LLIterator;
 
 typedef struct LList_ {
+    Comparator* comparator;
     LLNode*     head;
     int         length;
     int         dataSize;
@@ -24,14 +25,13 @@ typedef struct LList_ {
     int         (*Push)           (struct LList_*, void*);
     void*       (*Pop)            (struct LList_*);
     bool        (*Empty)          (struct LList_*);
-    void*       (*Find)           (struct LList_*, void*, bool(*)(void*, void*));
-    void        (*Traverse)       (struct LList_*, void(*)(void*));
-    void        (*Sort)           (struct LList_*, bool(*)(void*, void*));
-    int         (*Delete)         (struct LList_*, void*, bool(*)(void*, void*));
+    void*       (*Find)           (struct LList_*, void*);
+    void        (*Sort)           (struct LList_*);
+    int         (*Delete)         (struct LList_*, void*);
     LLIterator* (*CreateIterator) (struct LList_*);
 }LList;
 
-LList*      CreateLList        (int);//create link list
+LList*      CreateLList        (int, Comparator*);//create link list
 #ifdef __cplusplus
 }
 #endif

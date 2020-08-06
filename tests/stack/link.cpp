@@ -14,7 +14,7 @@ Student* CreateStudent(int num, wchar_t* name) {
 
 TEST(CreateStackStu, EqualsOne) {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    LList* stack = CreateLList(sizeof(Student));
+    LList* stack = CreateLList(sizeof(Student), NULL);
     EXPECT_EQ(stack->length, 0);
     Student* stu = CreateStudent(1, L"张三");
     int result = stack->Push(stack, stu);
@@ -26,7 +26,7 @@ TEST(CreateStackStu, EqualsOne) {
 
 TEST(CreateStackIntPointer, EqualsOne) {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    LList* stack = CreateLList(sizeof(int*));
+    LList* stack = CreateLList(sizeof(int*), NULL);
     EXPECT_EQ(stack->length, 0);
     int a = 1;
     int result = stack->Push(stack, &a);
@@ -46,7 +46,7 @@ void printStu(void* stu) {
 
 TEST(CreateStackBiNode, EqualsOne) {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    LList* stack = CreateLList(sizeof(BiNode**));
+    LList* stack = CreateLList(sizeof(BiNode**), NULL);
     EXPECT_EQ(stack->length, 0);
     BiNode* node = (BiNode*)malloc(sizeof(BiNode));
     Student* stu = CreateStudent(10, L"张三");

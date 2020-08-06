@@ -41,9 +41,20 @@ Student* CreateStudent(int num ,wchar_t* name) {
     return s;
 }
 
+Comparator* CreateComparator() {
+    Comparator* cmp = (Comparator*)malloc(sizeof(Comparator));
+    if (cmp == NULL) {
+        return NULL;
+    }
+    cmp->CompareTo = gt;
+    cmp->Equal = equal;
+    return cmp;
+}
+
 int main() {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    LList* list = CreateLList(sizeof(Student));
+    Comparator* cmp = CreateComparator();
+    LList* list = CreateLList(sizeof(Student), cmp);
     Student* stu1 = CreateStudent(100, L"张三1");
     Student* stu2 = CreateStudent(1, L"张三2");
     Student* stu3 = CreateStudent(90, L"张三3");
@@ -53,16 +64,16 @@ int main() {
     list->Add(list, 0, stu3);
     list->Add(list, 0, stu4);
     printf("find\n");
-    Student* current = list->Find(list, stu2, equal);
+    Student* current = list->Find(list, stu2);
     printStu(current);
     printf("sort\n");
-    list->Sort(list, gt);
+    list->Sort(list);
     printf("next:\n");
     LLIterator *ite = list->CreateIterator(list);
     while (ite->HasNext(ite)) {
         printStu(ite->Next(ite));
     }
-    list->Delete(list, stu1, equal);
+    list->Delete(list, stu1);
     printf("deleted:\n");
     ite = list->CreateIterator(list);
     while (ite->HasNext(ite)) {

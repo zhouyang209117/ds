@@ -9,9 +9,9 @@ static int         Add           (struct LList_*, int, void*);
 static int         Push          (struct LList_*, void*);
 static void*       Pop           (struct LList_*);
 static bool        Empty         (struct LList_*);
-static void*       Find          (struct LList_*, void*, bool(*)(void*, void*));
-static void        Sort          (struct LList_*, bool(*)(void*, void*));
-static int         Delete        (struct LList_*, void*, bool(*)(void*, void*));
+static void*       Find          (struct LList_*, void*);
+static void        Sort          (struct LList_*);
+static int         Delete        (struct LList_*, void*);
 static LLIterator* CreateIterator(struct LList_*);
 
 
@@ -22,7 +22,7 @@ static void swap(void* a, void* b, int size) {
     memcpy(b, tmp, size);
 }
 
-LList* CreateLList(int dataSize) {
+LList* CreateLList(int dataSize, Comparator* comparator) {
     LLNode* head = (LLNode*)malloc(sizeof(LLNode));
     if (head == NULL) {
         return NULL;
@@ -33,6 +33,7 @@ LList* CreateLList(int dataSize) {
     if (list == NULL) {
         return NULL;
     }
+    list->comparator = comparator;
     list->dataSize = dataSize;
     list->head = head;
     list->length = 0;
@@ -83,10 +84,10 @@ static bool Empty(LList* self) {
     return self->length == 0;
 }
 
-static void* Find(LList* self, void* data, bool(*equal)(void*, void*)) {
+static void* Find(LList* self, void* data) {
     LLNode* tmp = self->head->next;
     while (tmp != NULL) {
-        if (equal(tmp->ele, data)) {
+        if (self->comparator->Equal(tmp->ele, data)) {
             return tmp->ele;
         }
         tmp = tmp->next;
@@ -94,10 +95,10 @@ static void* Find(LList* self, void* data, bool(*equal)(void*, void*)) {
     return NULL;
 }
 
-static int Delete(LList* self, void* data, bool(*eq)(void*, void*)) {
+static int Delete(LList* self, void* data) {
     LLNode* current = self->head;
     while (current->next != NULL) {
-        if (eq(current->next->ele, data)) {
+        if (self->comparator->Equal(current->next->ele, data)) {
             LLNode* tmp = current->next;
             current->next = tmp->next;
             free(tmp);
@@ -119,12 +120,12 @@ static bool HasNext(LLIterator* self) {
     return self->current != NULL;
 }
 
-static void Sort(LList* self, bool(*gt)(void*, void*)) {
+static void Sort(LList* self) {
     LLNode* first = self->head->next;
     for (int i = self->length - 1 ; i > 0; i--) {
         LLNode* p1 = first;
         for (int j = 0; j < i; j++) {
-            if (gt(p1->ele, p1->next->ele)) {
+            if (self->comparator->CompareTo(p1->ele, p1->next->ele)) {
                 swap(p1->ele, p1->next->ele, self->dataSize);
             }
             p1 = p1->next;
