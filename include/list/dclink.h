@@ -1,5 +1,5 @@
-#ifndef DS_LIST_DCLINK_H
-#define DS_LIST_DCLINK_H
+#ifndef DS_DCLINK_LIST_H
+#define DS_DCLINK_LIST_H
 
 #ifdef __cplusplus
 extern "C" {

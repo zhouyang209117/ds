@@ -24,9 +24,9 @@ typedef struct CLList_ {
     int          length;
     int          dataSize;
     int          (*Add)           (struct CLList_*, int, void*);
-    int          (*Delete)        (struct CLList_*, int);
+    int          (*Delete)        (struct CLList_*, void*);
     int          (*Find)          (struct CLList_*, void*);
-    void*          (*Get)           (struct CLList_*, int);
+    void*        (*Get)           (struct CLList_*, int);
     CLLIterator* (*CreateIterator)(struct CLList_*);
 }CLList;
 

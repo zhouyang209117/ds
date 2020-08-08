@@ -74,4 +74,24 @@ TEST(CLListTest, EqualsOne) {
     EXPECT_EQ(stu00->num, 1);
     stu00 = (Student*)list->Get(list, 3);
     EXPECT_EQ(stu00->num, 2);
+    int result = list->Delete(list, stu1);
+    EXPECT_EQ(result, 0);
+    int b[3] = {3, 4, 2};
+    ite = list->CreateIterator(list);
+    for (int i = 0; i < 3; i++) {
+        if (ite->HasNext(ite)) {
+            Student* s1 = (Student*)(ite->Next(ite));
+            EXPECT_EQ(s1->num, b[i]);
+        }
+    }
+    result = list->Delete(list, stu2);
+    EXPECT_EQ(result, 0);
+    int c[2] = {3, 4};
+    ite = list->CreateIterator(list);
+    for (int i = 0; i < 2; i++) {
+        if (ite->HasNext(ite)) {
+            Student* s1 = (Student*)(ite->Next(ite));
+            EXPECT_EQ(s1->num, c[i]);
+        }
+    }
 }

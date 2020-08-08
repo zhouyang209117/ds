@@ -6,9 +6,10 @@
 #include "list/clink.h"
 #include "code/code.h"
 
-static int   Add (CLList*, int, void*);
-static int   Find(CLList*, void*);
-static void* Get (CLList*, int);
+static int   Add   (CLList*, int, void*);
+static int   Find  (CLList*, void*);
+static void* Get   (CLList*, int);
+static int   Delete(CLList*, void*);
 
 static CLLIterator* CreateIterator(CLList*);
 
@@ -33,7 +34,7 @@ CLList* CreateCLList(int dataSize, Comparator* cmp) {
     list->Add = Add;
     list->Find = Find;
     list->Get = Get;
-//    list->Delete = Delete;
+    list->Delete = Delete;
     list->CreateIterator = CreateIterator;
     return list;
 }
@@ -119,20 +120,22 @@ static void* Get(CLList* self, int index) {
     return current ? current->ele : NULL;
 }
 
-//static int Delete(CLList* self, int index) {
-//    if (self == NULL) {
-//        return EAGAIN;
-//    }
-//    CLLNode* current = self->head;
-//    while (current->next != self->head) {
-//        if (self->comparator->Equal(current->next->ele, data)) {
-//            CLLNode* tmp = current->next;
-//            current->next = current->next->next;
-//            self->length -= 1;
-//            free(tmp);
-//            return 0;
-//        }
-//        current = current->next;
-//    }
-//    return ENOTFOUND;
-//}
+static int Delete(CLList* self, void* data) {
+    if (self == NULL) {
+        return EAGAIN;
+    }
+    if (self->head == NULL) {
+        return EAGAIN;
+    }
+    int i = 0;
+    for (CLLNode* current = self->head; current != self->head || i == 0;
+            current = current->next, i++) {
+        if (self->comparator->Equal(current->next->ele, data)) {
+            CLLNode* tmp = current->next;
+            current->next = current->next->next;
+            free(tmp);
+            return 0;
+        }
+    }
+    return ENOTFOUND;
+}
