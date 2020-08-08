@@ -1,6 +1,7 @@
 #ifndef DS_LIST_CLINK_H
 #define DS_LIST_CLINK_H
 #include <stdbool.h>
+#include <interface/comparator.h>
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -18,15 +19,18 @@ typedef struct CLLIterator_ {
 } CLLIterator;
 
 typedef struct CLList_ {
+    Comparator*  comparator;
     CLLNode      *head;
     int          length;
     int          dataSize;
     int          (*Add)           (struct CLList_*, int, void*);
-    int          (*Delete)        (struct CLList_*, void*, bool(*eq)(void*, void*));
+    int          (*Delete)        (struct CLList_*, int);
+    int          (*Find)          (struct CLList_*, void*);
+    void*          (*Get)           (struct CLList_*, int);
     CLLIterator* (*CreateIterator)(struct CLList_*);
 }CLList;
 
-CLList* CreateCLList(int);
+CLList* CreateCLList(int, Comparator*);
 #ifdef __cplusplus
 }
 #endif

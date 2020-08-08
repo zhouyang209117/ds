@@ -24,3 +24,4 @@ target_compile_options(list_clink.out PRIVATE -Wall)
 
 add_executable(simple_sq.out simple_sq.c)
 add_executable(simple_link.out simple_link.c)
+add_executable(simple_clink.out simple_clink.c)

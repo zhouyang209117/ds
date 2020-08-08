@@ -11,6 +11,8 @@ cd ../..
 ./app/list/list_link.out
 ./app/list/list_clink.out
 ./app/list/simple_sq.out
+./app/list/simple_link.out
+./app/list/simple_clink.out
 ./app/tree/tree_bi.out
 ./tests/unittest_list.out
 ./tests/unittest_link_list.out

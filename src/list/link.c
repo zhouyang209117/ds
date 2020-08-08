@@ -120,7 +120,7 @@ static void Sort(LList* self) {
 static LLIterator* CreateIterator(LList* self) {
     LLIterator* ite = (LLIterator*)malloc(sizeof(LLIterator));
     ite->current = self->head->next;
-    ite->Next = Next;
     ite->HasNext = HasNext;
+    ite->Next = Next;
     return ite;
 }
