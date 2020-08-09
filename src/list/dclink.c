@@ -87,7 +87,7 @@ static int Delete(DCLList* self, void* data) {
     return ENOTFOUND;
 }
 
-int Find(DCLList* self, void* data) {
+static int Find(DCLList* self, void* data) {
     if (self == NULL) {
         return -2;
     }
@@ -104,7 +104,7 @@ int Find(DCLList* self, void* data) {
     return -1;
 }
 
-void* Get(DCLList* self, int index) {
+static void* Get(DCLList* self, int index) {
     if (self == NULL) {
         return NULL;
     }
