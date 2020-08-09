@@ -16,8 +16,7 @@ void Init(Node** head) {
 
 int Add(Node* head, int index, int data) {
     Node* current = head;
-    int i = 0;
-    for (; i < index; i++, current = current->next) {
+    for (int i = 0; i < index; i++, current = current->next) {
     }
     Node* newNode = (Node*)malloc(sizeof(Node));
     newNode->data = data;

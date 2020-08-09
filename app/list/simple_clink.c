@@ -14,8 +14,7 @@ void Init(LNode** head) {
 
 int Add(LNode* head, int index, int data) {
     LNode* current = head;
-    int i = 0;
-    for (; i < index; i++, current = current->next) {
+    for (int i = 0; i < index; i++, current = current->next) {
     }
     LNode* newNode = (LNode*)malloc(sizeof(LNode));
     newNode->data = data;

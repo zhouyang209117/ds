@@ -4,7 +4,7 @@
 #include <locale.h>
 #include <string.h>
 #include <stdbool.h>
-#include "list/clink.h"
+#include <list/clink.h>
 typedef struct Student_ {
     int num;
     wchar_t* name;
@@ -41,31 +41,41 @@ Student* CreateStudent(int num ,wchar_t* name) {
     return s;
 }
 
+Comparator* CreateComparator() {
+    Comparator* cmp = (Comparator*)malloc(sizeof(Comparator));
+    if (cmp == NULL) {
+        return NULL;
+    }
+    cmp->CompareTo = gt;
+    cmp->Equal = equal;
+    return cmp;
+}
+
 int main() {
-//    setlocale(LC_ALL, "zh_CN.UTF-8");
-//    CLList* list = CreateCLList(sizeof(Student));
-//    Student* stu1 = CreateStudent(100, L"张三1");
-//    Student* stu2 = CreateStudent(1, L"张三2");
-//    Student* stu3 = CreateStudent(90, L"张三3");
-//    Student* stu4 = CreateStudent(2, L"张三4");
-//    list->Add(list, 0, stu1);
-//    list->Add(list, 0, stu2);
-//    list->Add(list, 0, stu3);
-//    list->Add(list, 0, stu4);
-//    CLLIterator *ite = list->CreateIterator(list);
-//    while (ite->HasNext(ite)) {
-//        printStu(ite->Next(ite));
-//    }
-//    Student* tmp = CreateStudent(100, L"a");
-//    int deleteResult = list->Delete(list, tmp, equal);
-//    if (deleteResult == 0) {
-//        printf("delete ok\n");
-//    } else {
-//        printf("delete error\n");
-//    }
-//    ite = list->CreateIterator(list);
-//    while (ite->HasNext(ite)) {
-//        printStu(ite->Next(ite));
-//    }
+    setlocale(LC_ALL, "zh_CN.UTF-8");
+    CLList* list = CreateCLList(sizeof(Student), CreateComparator());
+    Student* stu1 = CreateStudent(100, L"张三1");
+    Student* stu2 = CreateStudent(1, L"张三2");
+    Student* stu3 = CreateStudent(90, L"张三3");
+    Student* stu4 = CreateStudent(2, L"张三4");
+    list->Add(list, 0, stu1);
+    list->Add(list, 0, stu2);
+    list->Add(list, 0, stu3);
+    list->Add(list, 0, stu4);
+    CLLIterator *ite = list->CreateIterator(list);
+    while (ite->HasNext(ite)) {
+        printStu(ite->Next(ite));
+    }
+    Student* tmp = CreateStudent(100, L"a");
+    int deleteResult = list->Delete(list, tmp);
+    if (deleteResult == 0) {
+        printf("delete ok\n");
+    } else {
+        printf("delete error\n");
+    }
+    ite = list->CreateIterator(list);
+    while (ite->HasNext(ite)) {
+        printStu(ite->Next(ite));
+    }
     return 0;
 }
