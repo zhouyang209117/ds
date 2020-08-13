@@ -21,4 +21,5 @@ cd ../..
 ./tests/unittest_stack.out
 ./tests/unittest_sq_stack.out
 ./tests/unittest_sq_queue.out
+./tests/unittest_link_queue.out
 ./tests/unittest_tree_bi.out

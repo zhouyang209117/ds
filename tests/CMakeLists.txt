@@ -49,6 +49,13 @@ target_link_libraries(unittest_sq_queue.out
         PUBLIC sq_queue
         PUBLIC ${PROJECT_LINK_LIBS})
 
+add_executable(unittest_link_queue.out
+        queue/link.cpp
+        main.cpp)
+target_link_libraries(unittest_link_queue.out
+        PUBLIC link_queue
+        PUBLIC ${PROJECT_LINK_LIBS})
+
 add_executable(unittest_tree_bi.out
         tree/bi.cpp
         main.cpp)
