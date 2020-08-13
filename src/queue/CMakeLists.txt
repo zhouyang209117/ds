@@ -1,0 +1,1 @@
+add_library(sq_queue sq.c)
