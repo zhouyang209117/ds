@@ -22,6 +22,7 @@ TEST(CreateStackStu, EqualsOne) {
     Student* stu1 = (Student*)stack->Pop(stack);
     EXPECT_EQ(stu1 != NULL, true);
     EXPECT_EQ(1, stack->Empty(stack));
+    EXPECT_EQ(1, stu->num);
 }
 
 TEST(CreateStackIntPointer, EqualsOne) {
