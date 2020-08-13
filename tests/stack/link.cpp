@@ -19,6 +19,8 @@ TEST(CreateStackStu, EqualsOne) {
     Student* stu = CreateStudent(1, L"张三");
     int result = stack->Push(stack, stu);
     EXPECT_EQ(result, 0);
+    Student* top = (Student*)stack->Top(stack);
+    EXPECT_EQ(top->num, 1);
     Student* stu1 = (Student*)stack->Pop(stack);
     EXPECT_EQ(stu1 != NULL, true);
     EXPECT_EQ(1, stack->Empty(stack));

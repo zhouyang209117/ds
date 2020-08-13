@@ -11,12 +11,12 @@ typedef struct LSNode_ { // link stack node
 }LSNode;
 
 typedef struct LStack_ {
-    Comparator* comparator;
     LSNode*     head;
     int         dataSize;
     int         (*Push)   (struct LStack_*, void*);
     void*       (*Pop)    (struct LStack_*);
-    int         (*Empty)  (struct LStack_*);
+    void*       (*Top)    (struct LStack_*);
+    bool        (*Empty)  (struct LStack_*);
 }LStack;
 
 LStack* CreateLStack (int);//create link stack

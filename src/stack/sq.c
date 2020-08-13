@@ -6,6 +6,7 @@
 
 static int   Push (SqStack*, void*);
 static void* Pop  (SqStack*);
+static void* Top  (SqStack*);
 static bool  Empty(SqStack*);
 
 SqStack* CreateSqStack(int eleSize) {
@@ -22,6 +23,7 @@ SqStack* CreateSqStack(int eleSize) {
     stack->dataSize = eleSize;
     stack->Push = Push;
     stack->Pop = Pop;
+    stack->Top = Top;
     stack->Empty = Empty;
     return stack;
 }
@@ -62,6 +64,21 @@ static void* Pop(SqStack* stack) {
         }
         stack->total = stack->total / 2;
     }
+    return result;
+}
+
+static void* Top(SqStack* stack) {
+    if (stack == NULL) {
+        return NULL;
+    }
+    if (stack->length == 0) {
+        return NULL;
+    }
+    char* result = (char*)malloc(stack->dataSize);
+    if (result == NULL) {
+        return NULL;
+    }
+    memcpy(result, stack->ele + (stack->length - 1) * stack->dataSize , stack->dataSize);
     return result;
 }
 

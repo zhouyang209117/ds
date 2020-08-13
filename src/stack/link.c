@@ -6,7 +6,8 @@
 
 static int   Push (LStack*, void*);
 static void* Pop  (LStack*);
-static int   Empty(LStack*);
+static void* Top  (LStack*);
+static bool  Empty(LStack*);
 
 LStack* CreateLStack(int dataSize) {
     LSNode* head = (LSNode*)malloc(sizeof(LSNode));
@@ -23,6 +24,7 @@ LStack* CreateLStack(int dataSize) {
     stack->head = head;
     stack->Push = Push;
     stack->Pop = Pop;
+    stack->Top = Top;
     stack->Empty = Empty;
     return stack;
 }
@@ -67,12 +69,24 @@ static void* Pop(LStack* self) {
     return tmp->ele;
 }
 
-static int Empty(LStack* self) {
+static void* Top(LStack* self) {
     if (self == NULL) {
-        return 2;
+        return NULL;
     }
     if (self->head == NULL) {
-        return 2;
+        return NULL;
     }
-    return self->head->next ? 0 : 1;
+    if (self->Empty(self)) {
+        return NULL;
+    }
+    char* result = (char*)malloc(self->dataSize);
+    if (result == NULL) {
+        return NULL;
+    }
+    memcpy(result, self->head->next->ele, self->dataSize);
+    return result;
+}
+
+static bool Empty(LStack* self) {
+    return self->head->next == NULL;
 }

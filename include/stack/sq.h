@@ -13,6 +13,7 @@ typedef struct SqStack_ {
     int   total;
     int   (*Push) (struct SqStack_*, void*);
     void* (*Pop)  (struct SqStack_*);
+    void* (*Top)  (struct SqStack_*);
     bool  (*Empty)(struct SqStack_*);
 }SqStack;
 
