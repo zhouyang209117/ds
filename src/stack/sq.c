@@ -4,8 +4,8 @@
 #include <string.h>
 
 
-static int   Push(SqStack*, void*);
-static void* Pop(SqStack*);
+static int   Push (SqStack*, void*);
+static void* Pop  (SqStack*);
 static bool  Empty(SqStack*);
 
 SqStack* CreateSqStack(int eleSize) {
@@ -15,6 +15,9 @@ SqStack* CreateSqStack(int eleSize) {
     }
     stack->total = SQ_STACK_INIT_SIZE;
     stack->ele = (char*)malloc(eleSize * SQ_STACK_INIT_SIZE);
+    if (stack->ele == NULL) {
+        return NULL;
+    }
     stack->length = 0;
     stack->dataSize = eleSize;
     stack->Push = Push;
@@ -29,14 +32,13 @@ static int Push(SqStack* stack, void* data) {
     }
     if (stack->length == stack->total) {
         stack->ele = (char*)realloc(stack->ele, (stack->length * 2) * stack->dataSize);
+        if (stack->ele == NULL) {
+            return 1;
+        }
         stack->total = stack->length * 2;
     }
-    for (int i = stack->length - 1; i >= 0; i--) {
-        memcpy(stack->ele + (i + 1) * stack->dataSize,
-               stack->ele + i * stack->dataSize, stack->dataSize);
-    }
-    memcpy(stack->ele, data, stack->dataSize);
-    stack->length += 1;
+    memcpy(stack->ele + stack->length * stack->dataSize, data, stack->dataSize);
+    stack->length++;
     return 0;
 }
 
@@ -44,16 +46,20 @@ static void* Pop(SqStack* stack) {
     if (stack == NULL) {
         return NULL;
     }
-    char* result = (char*)malloc(stack->dataSize);
-    memcpy(result, stack->ele, stack->dataSize);
-    for (int i = 0; i < stack->length - 1; i++) {
-        int offset1 = i * stack->dataSize;
-        int offset2 = (i + 1) * stack->dataSize;
-        memcpy(stack->ele + offset1, stack->ele + offset2, stack->dataSize);
+    if (stack->length == 0) {
+        return NULL;
     }
-    stack->length -= 1;
+    char* result = (char*)malloc(stack->dataSize);
+    if (result == NULL) {
+        return NULL;
+    }
+    memcpy(result, stack->ele + (stack->length - 1) * stack->dataSize , stack->dataSize);
+    stack->length--;
     if (stack->length * 2 < stack->total && stack->total > SQ_STACK_INIT_SIZE) {
         stack->ele = (char*)realloc(stack->ele, (stack->total / 2) * stack->dataSize);
+        if (stack->ele == NULL) {
+            return NULL;
+        }
         stack->total = stack->total / 2;
     }
     return result;
