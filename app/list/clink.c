@@ -5,11 +5,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include <list/clink.h>
-typedef struct Student_ {
-    int num;
-    wchar_t* name;
-}Student;
-
+#include "common.c"
 
 void printStu(void* stu) {
     Student* tmp = (Student*)stu;
@@ -32,13 +28,6 @@ bool gt(void* a1, void* a2) {
     } else {
         return false;
     }
-}
-
-Student* CreateStudent(int num ,wchar_t* name) {
-    Student* s = (Student*)malloc(sizeof(Student));
-    s->num = num;
-    s->name = name;
-    return s;
 }
 
 Comparator* CreateComparator() {

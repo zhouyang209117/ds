@@ -6,11 +6,7 @@
 #include <stdbool.h>
 #include <interface/comparator.h>
 #include <list/sq.h>
-typedef struct Student_ {
-    int num;
-    wchar_t* name;
-}Student;
-
+#include "common.c"
 
 void printStu(void* stu) {
     Student* tmp = (Student*)stu;
@@ -39,13 +35,6 @@ bool gt(void* a1, void* a2) {
     } else {
         return false;
     }
-}
-
-Student* CreateStudent(int num, wchar_t* name) {
-    Student* stu = (Student*)malloc(sizeof(Student));
-    stu->num = num;
-    stu->name = name;
-    return stu;
 }
 
 Comparator* CreateComparator() {
