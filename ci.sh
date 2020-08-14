@@ -13,6 +13,8 @@ cd ../..
 ./app/list/simple_sq.out
 ./app/list/simple_link.out
 ./app/list/simple_clink.out
+./app/stack/conversion.out
+./app/stack/match.out
 ./app/tree/tree_bi.out
 ./tests/unittest_list.out
 ./tests/unittest_link_list.out

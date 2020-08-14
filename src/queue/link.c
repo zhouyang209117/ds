@@ -5,8 +5,8 @@
 #include <queue/link.h>
 
 int   Enter (LQueue*, void*);
-void* Delete  (LQueue*);
-bool  Empty(LQueue*);
+void* Delete(LQueue*);
+bool  Empty (LQueue*);
 
 LQueue* CreateLQueue(int dataSize) {
     LQueue* queue = (LQueue*)malloc(sizeof(LQueue));
