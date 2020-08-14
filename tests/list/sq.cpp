@@ -1,17 +1,6 @@
 #include <gtest/gtest.h>
 #include <list/sq.h>
-
-typedef struct Student_ {
-    int num;
-    wchar_t* name;
-}Student;
-
-Student* CreateStudent(int num, wchar_t* name) {
-    Student* stu = (Student*)malloc(sizeof(Student));
-    stu->num = num;
-    stu->name = name;
-    return stu;
-}
+#include "../common.c"
 
 TEST(CreateSqList, EqualsOne) {
     SqList* list = CreateSqList(sizeof(Student), NULL);
@@ -20,9 +9,9 @@ TEST(CreateSqList, EqualsOne) {
 
 TEST(SqListAdd, EqualsOne) {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    Student* stu1 = CreateStudent(0, L"张三1");
-    Student* stu2 = CreateStudent(0, L"张三2");
-    Student* stu3 = CreateStudent(0, L"张三3");
+    Student* stu1 = CreateStudent(0);
+    Student* stu2 = CreateStudent(1);
+    Student* stu3 = CreateStudent(2);
     SqList* list = CreateSqList(sizeof(Student), NULL);
     int result1 = list->Add(list, 0, stu1);
     int result2 = list->Add(list, 0, stu2);

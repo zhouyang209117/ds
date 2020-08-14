@@ -22,8 +22,8 @@ bool empty(void* data) {
 TEST(BiTree, EqualsOne) {
     setlocale(LC_ALL, "zh_CN.UTF-8");
     Student* stu1 = CreateStudent(0, L"张三1");
-    Student* stu2 = CreateStudent(-1, L"张三1");
-    Student* stu3 = CreateStudent(-1, L"张三1");
+    Student* stu2 = CreateStudent(-1, L"张三2");
+    Student* stu3 = CreateStudent(-1, L"张三3");
     SqList* list = CreateSqList(sizeof(Student), NULL);
     int result1 = list->Add(list, list->length, stu1);
     int result2 = list->Add(list, list->length, stu2);

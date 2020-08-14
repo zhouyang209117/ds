@@ -1,18 +1,7 @@
 #include <gtest/gtest.h>
 #include <list/clink.h>
 #include <interface/comparator.h>
-
-typedef struct Student_ {
-    int num;
-    wchar_t* name;
-}Student;
-
-Student* CreateStudent(int num, wchar_t* name) {
-    Student* stu = (Student*)malloc(sizeof(Student));
-    stu->num = num;
-    stu->name = name;
-    return stu;
-}
+#include "../common.c"
 
 bool equal(void* stu1, void* stu2) {
     if (((Student*)stu1)->num == ((Student*)stu2)->num) {
@@ -45,10 +34,10 @@ Comparator* CreateComparator() {
 TEST(CLListTest, EqualsOne) {
     CLList* list = CreateCLList(sizeof(Student), CreateComparator());
     EXPECT_EQ(list->length, 0);
-    Student* stu1 = CreateStudent(1, L"张三1");
-    Student* stu2 = CreateStudent(2, L"张三2");
-    Student* stu3 = CreateStudent(3, L"张三3");
-    Student* stu4 = CreateStudent(4, L"张三4");
+    Student* stu1 = CreateStudent(1);
+    Student* stu2 = CreateStudent(2);
+    Student* stu3 = CreateStudent(3);
+    Student* stu4 = CreateStudent(4);
     int result1 = list->Add(list, 0, stu1);
     int result2 = list->Add(list, 1, stu2);
     int result3 = list->Add(list, 1, stu3);

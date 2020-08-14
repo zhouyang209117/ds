@@ -1,15 +1,6 @@
 #include <gtest/gtest.h>
 #include <queue/link.h>
-
-typedef struct Student_ {
-    int num;
-}Student;
-
-Student* CreateStudent(int num) {
-    Student* stu = (Student*)malloc(sizeof(Student));
-    stu->num = num;
-    return stu;
-}
+#include "../common.c"
 
 TEST(CreateLinkQueue, EqualsOne) {
     LQueue* queue = CreateLQueue(sizeof(Student));

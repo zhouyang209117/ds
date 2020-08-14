@@ -2,21 +2,12 @@
 #include <list/link.h>
 #include <tree/bi.h>
 #include <stack/link.h>
-
-typedef struct Student_ {
-    int num;
-}Student;
-
-Student* CreateStudent(int num, wchar_t* name) {
-    Student* stu = (Student*)malloc(sizeof(Student));
-    stu->num = num;
-    return stu;
-}
+#include "../common.c"
 
 TEST(CreateStackStu, EqualsOne) {
     setlocale(LC_ALL, "zh_CN.UTF-8");
     LStack* stack = CreateLStack(sizeof(Student));
-    Student* stu = CreateStudent(1, L"张三");
+    Student* stu = CreateStudent(1);
     int result = stack->Push(stack, stu);
     EXPECT_EQ(result, 0);
     Student* top = (Student*)stack->Top(stack);
@@ -50,7 +41,7 @@ TEST(CreateStackBiNode, EqualsOne) {
     setlocale(LC_ALL, "zh_CN.UTF-8");
     LStack* stack = CreateLStack(sizeof(BiNode**));
     BiNode* node = (BiNode*)malloc(sizeof(BiNode));
-    Student* stu = CreateStudent(10, L"张三");
+    Student* stu = CreateStudent(10);
     node->data = stu;
     node->l = NULL;
     node->r = NULL;

@@ -2,19 +2,7 @@
 #include <list/link.h>
 #include <locale.h>
 #include <code/code.h>
-
-
-typedef struct Student_ {
-    int num;
-    wchar_t* name;
-}Student;
-
-Student* CreateStudent(int num, wchar_t* name) {
-    Student* stu = (Student*)malloc(sizeof(Student));
-    stu->num = num;
-    stu->name = name;
-    return stu;
-}
+#include "../common.c"
 
 bool equal(void* stu1, void* stu2) {
     if (((Student*)stu1)->num == ((Student*)stu2)->num) {
@@ -46,11 +34,11 @@ Comparator* CreateComparator() {
 
 TEST(LListTest, EqualsOne) {
     setlocale(LC_ALL, "zh_CN.UTF-8");
-    Student* stu1 = CreateStudent(1, L"张三1");
-    Student* stu2 = CreateStudent(2, L"张三2");
-    Student* stu3 = CreateStudent(3, L"张三3");
-    Student* stu4 = CreateStudent(4, L"张三3");
-    Student* stu5 = CreateStudent(5, L"张三3");
+    Student* stu1 = CreateStudent(1);
+    Student* stu2 = CreateStudent(2);
+    Student* stu3 = CreateStudent(3);
+    Student* stu4 = CreateStudent(4);
+    Student* stu5 = CreateStudent(5);
     LList* list = CreateLList(sizeof(Student), CreateComparator());
     int result1 = list->Add(list, 0, stu1);
     int result2 = list->Add(list, 0, stu2);

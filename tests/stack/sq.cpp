@@ -1,15 +1,7 @@
 #include <gtest/gtest.h>
 #include <stack/sq.h>
+#include "../common.c"
 
-typedef struct Student_ {
-    int num;
-}Student;
-
-Student* CreateStudent(int num) {
-    Student* stu = (Student*)malloc(sizeof(Student));
-    stu->num = num;
-    return stu;
-}
 
 TEST(CreateSqStack, EqualsOne) {
     SqStack* stack = CreateSqStack(sizeof(Student));
