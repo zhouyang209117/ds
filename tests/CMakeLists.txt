@@ -64,3 +64,10 @@ target_link_libraries(unittest_tree_bi.out
         PUBLIC link_stack
         PUBLIC tree_bi
         PUBLIC ${PROJECT_LINK_LIBS})
+
+add_executable(unittest_mat_graph.out
+        graph/mat.cpp
+        main.cpp)
+target_link_libraries(unittest_mat_graph.out
+        PUBLIC mat_graph
+        PUBLIC ${PROJECT_LINK_LIBS})

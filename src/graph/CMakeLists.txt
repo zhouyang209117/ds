@@ -1,0 +1,1 @@
+add_library(mat_graph mat.c)
